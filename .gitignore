@@ -1,0 +1,9 @@
+### Composer template
+composer.phar
+/vendor/
+
+### IDEA
+/.idea/
+
+### PHPUNIT
+/.phpunit.result.cache

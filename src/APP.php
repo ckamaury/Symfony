@@ -1,0 +1,112 @@
+<?php
+
+namespace CkAmaury\Symfony;
+
+use DateTime;
+use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
+
+class APP {
+
+    public static bool $is_init = false;
+
+    public static function init(){
+        if(self::$is_init == FALSE){
+            setlocale(LC_TIME, "french");
+            date_default_timezone_set( 'UTC');
+            define('DB_TIME',(new DateTime())->getTimestamp());
+            self::$is_init = TRUE;
+        }
+    }
+
+    public static function getDB_Time(){
+        return (new DateTime())->setTimestamp(DB_TIME);
+    }
+
+    public static function getDir() : string{
+        $dir = self::getKernel()->getProjectDir();
+        $dir = str_replace('\\','/',$dir);
+        return $dir.'/';
+    }
+
+
+    public static function getKernel(){
+        global $kernel;
+        if ( 'AppCache' == get_class($kernel) ) {
+            $kernel = $kernel->getKernel();
+        }
+        return $kernel;
+    }
+
+    public static function getSecurityToken(){
+        return self::getKernel()->getContainer()->get('security.token_storage')->getToken();
+    }
+
+
+    public static function getUser(){
+        return self::getSecurityToken()->getUser();
+    }
+
+    public static function getRouter(){
+        return self::getKernel()->getContainer()->get('router');
+    }
+
+    public static function getOriginalUser($RepositoryUser){
+        $token = self::getSecurityToken();
+        if($token instanceof SwitchUserToken) {
+            $id = $token->getOriginalToken()->getUser()->getId();
+            $user = $RepositoryUser->find($id);
+        }
+        else{
+            return self::getUser();
+        }
+        return $user;
+    }
+
+
+    public static function getManager(): EntityManager{
+        return self::getKernel()->getContainer()->get( 'doctrine.orm.entity_manager');
+    }
+
+    public static function getReference($p_Class,$p_ID) {
+        return self::getManager()->getReference($p_Class,$p_ID);
+    }
+
+    public static function getJsonResponse($p_Connected,$p_Authorized,$p_Error,$p_Values){
+        return array(
+            'connected'     => $p_Connected,
+            'authorized'    => $p_Authorized,
+            'error'         => $p_Error,
+            'values'        => $p_Values
+        );
+    }
+
+    public static function transformDBResult($p_Array,$p_Index,$p_Index2 = null){
+        $array = array();
+        foreach($p_Array as $k => $v){
+            if(is_null($p_Index2)){
+                $array[$v->{$p_Index}()] = $v;
+            }
+            else{
+                $array[$v->{$p_Index}()->{$p_Index2}()] = $v;
+            }
+        }
+        return $array;
+    }
+
+    public static function convertDBResult($p_Array){
+        return self::transformDBResult($p_Array,'getId');
+    }
+
+    public static function generateRandomString($length = 10) : string{
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[Rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
+}
+

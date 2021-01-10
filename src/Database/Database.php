@@ -37,6 +37,6 @@ class Database {
 
         $sql = 'set @rn := 0;';
         $sql .= 'UPDATE '.$table_name.' set id = (@rn := @rn + 1) order by id;';
-        APP::execute($sql);
+        self::execute($sql);
     }
 }

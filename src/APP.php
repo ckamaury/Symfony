@@ -23,9 +23,17 @@ class APP {
         return (new DateTime())->setTimestamp(DB_TIME);
     }
 
-    public static function getDir() : string{
+    public static function getDir(int $level = 0) : string{
         $dir = self::getKernel()->getProjectDir();
         $dir = str_replace('\\','/',$dir);
+        if($level > 0){
+            $array = explode('/',$dir);
+            while(count($array) > 0 && $level > 0){
+                array_pop($array);
+                $level--;
+            }
+            $dir = implode('/',$array);
+        }
         return $dir.'/';
     }
 

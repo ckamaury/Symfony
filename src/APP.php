@@ -2,8 +2,12 @@
 
 namespace CkAmaury\Symfony;
 
+use CkAmaury\Spreadsheet\File;
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Mime\FileinfoMimeTypeGuesser;
 use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
 
 class APP {
@@ -50,7 +54,6 @@ class APP {
         return self::getKernel()->getContainer()->get('security.token_storage')->getToken();
     }
 
-
     public static function getUser(){
         return self::getSecurityToken()->getUser();
     }
@@ -71,13 +74,25 @@ class APP {
         return $user;
     }
 
-
     public static function getManager(): EntityManager{
         return self::getKernel()->getContainer()->get( 'doctrine.orm.entity_manager');
     }
 
     public static function getReference($p_Class,$p_ID) {
         return self::getManager()->getReference($p_Class,$p_ID);
+    }
+
+    public function download(File $file,?bool $deleteAfterSend = false){
+        $mimeTypeGuesser = new FileinfoMimeTypeGuesser();
+        $mimeType = ($mimeTypeGuesser->isGuesserSupported()) ? $mimeTypeGuesser->guessMimeType($file->getPath()) : 'text/plain';
+
+        $response = new BinaryFileResponse($file->getPath());
+        $response->headers->set('Content-Type', $mimeType);
+        $response->setContentDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            $file->getName()
+        );
+        return $response->deleteFileAfterSend($deleteAfterSend);
     }
 
     public static function getJsonResponse($p_Connected,$p_Authorized,$p_Error,$p_Values){

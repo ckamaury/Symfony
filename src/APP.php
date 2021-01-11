@@ -82,7 +82,7 @@ class APP {
         return self::getManager()->getReference($p_Class,$p_ID);
     }
 
-    public function download(File $file,?bool $deleteAfterSend = false){
+    public static function download(File $file,?bool $deleteAfterSend = false){
         $mimeTypeGuesser = new FileinfoMimeTypeGuesser();
         $mimeType = ($mimeTypeGuesser->isGuesserSupported()) ? $mimeTypeGuesser->guessMimeType($file->getPath()) : 'text/plain';
 

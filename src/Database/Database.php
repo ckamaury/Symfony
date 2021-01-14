@@ -22,8 +22,8 @@ class Database {
 
     public static function forceId(string $class){
         $metadata = APP::getManager()->getClassMetaData($class);
-        $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
-        $metadata->setIdGenerator(new AssignedGenerator());
+        $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
+        $metadata->setIdGenerator(new \Doctrine\ORM\Id\AssignedGenerator());
     }
 
     public static function execute(string $sql,array $parameters = array()){

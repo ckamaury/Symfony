@@ -41,7 +41,6 @@ class DB_Timed extends DB_Entity {
     {
         return $this->ins_at;
     }
-
     public function setInsAt(\DateTimeInterface $ins_at): self
     {
         $this->ins_at = $ins_at;
@@ -53,12 +52,16 @@ class DB_Timed extends DB_Entity {
     {
         return $this->upd_at;
     }
-
     public function setUpdAt(\DateTimeInterface $upd_at): self
     {
         $this->upd_at = $upd_at;
 
         return $this;
+    }
+
+    public function eraseDatabaseTime(){
+        $this->ins_at = null;
+        $this->upd_at = null;
     }
 
     public function save(bool $pFlush = false){

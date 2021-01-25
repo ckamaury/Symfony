@@ -28,11 +28,17 @@ class DB_Entity {
     }
 
     protected function convertDate($p_Value){
-        if(is_null($p_Value)){
+        if(is_object($p_Value) && gettype($p_Value) == DateTime::class){
+            return $p_Value;
+        }
+        elseif(is_null($p_Value)){
             return NULL;
         }
         elseif(is_string($p_Value)){
             return new DateTime($p_Value);
+        }
+        elseif(is_object($p_Value)){
+            return (new DateTime())->setTimestamp($p_Value->getTimestamp());
         }
         else{
             return $p_Value;

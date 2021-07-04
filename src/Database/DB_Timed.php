@@ -64,12 +64,12 @@ class DB_Timed extends DB_Entity {
         $this->upd_at = null;
     }
 
-    public function save(bool $pFlush = false){
+    public function save(bool $pFlush = false, ?string $manager = null){
         if(is_null($this->ins_at)){
-            APP::getManager()->persist($this);
+            APP::getManager($manager)->persist($this);
         }
         if($pFlush){
-            APP::getManager()->flush();
+            APP::getManager($manager)->flush();
         }
     }
 

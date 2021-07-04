@@ -18,12 +18,12 @@ class DB_Entity {
         }
     }
 
-    public function save(bool $pFlush = false){
+    public function save(bool $pFlush = false, ?string $manager = null){
         if($this->getId() == 0){
-            APP::getManager()->persist($this);
+            APP::getManager($manager)->persist($this);
         }
         if($pFlush){
-            APP::getManager()->flush();
+            APP::getManager($manager)->flush();
         }
     }
 

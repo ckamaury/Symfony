@@ -74,8 +74,13 @@ class APP {
         return $user;
     }
 
-    public static function getManager(): EntityManager{
-        return self::getKernel()->getContainer()->get( 'doctrine.orm.entity_manager');
+    public static function getManager($base = null): EntityManager{
+        if(is_null($base)){
+            return self::getKernel()->getContainer()->get('doctrine.orm.entity_manager');
+        }
+        else{
+            return self::getKernel()->getContainer()->get('doctrine')->getManager($base);
+        }
     }
 
     public static function getReference($p_Class,$p_ID) {

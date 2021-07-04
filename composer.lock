@@ -4,8 +4,46 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2673e129c8a8ecc30c1130dc5a6f7096",
+    "content-hash": "f078169746728f33e8f92bd3c55aded4",
     "packages": [
+        {
+            "name": "ckamaury/phpcurl",
+            "version": "1.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ckamaury/PhpCurl.git",
+                "reference": "43ad31e63b8644d628a65d904a58850a39e34034"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ckamaury/PhpCurl/zipball/43ad31e63b8644d628a65d904a58850a39e34034",
+                "reference": "43ad31e63b8644d628a65d904a58850a39e34034",
+                "shasum": ""
+            },
+            "require": {
+                "ckamaury/phpmagicfunctions": "^1.0",
+                "ext-curl": "*",
+                "php": ">=8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CkAmaury\\PhpCurl\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Romain FRANCOIS"
+                }
+            ],
+            "description": "PHP Curl functions.",
+            "support": {
+                "issues": "https://github.com/ckamaury/PhpCurl/issues",
+                "source": "https://github.com/ckamaury/PhpCurl/tree/1.0.7"
+            },
+            "time": "2021-05-05T06:52:32+00:00"
+        },
         {
             "name": "ckamaury/phpdatetime",
             "version": "1.0.2",
@@ -43,6 +81,44 @@
             ],
             "description": "PHP Datetime extends class for Datetime. Including Timer and Slots.",
             "time": "2020-12-31T09:35:24+00:00"
+        },
+        {
+            "name": "ckamaury/phphtml",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ckamaury/phpHtml.git",
+                "reference": "ec0474c3f0b29b972a8c3568f702c64bb3451654"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ckamaury/phpHtml/zipball/ec0474c3f0b29b972a8c3568f702c64bb3451654",
+                "reference": "ec0474c3f0b29b972a8c3568f702c64bb3451654",
+                "shasum": ""
+            },
+            "require": {
+                "ckamaury/phpmagicfunctions": "^1.0",
+                "ext-curl": "*",
+                "php": ">=8.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CkAmaury\\PhpHtml\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Romain FRANCOIS"
+                }
+            ],
+            "description": "PHP HTML analyzer.",
+            "support": {
+                "issues": "https://github.com/ckamaury/phpHtml/issues",
+                "source": "https://github.com/ckamaury/phpHtml/tree/1.0.0"
+            },
+            "time": "2021-04-13T10:44:40+00:00"
         },
         {
             "name": "ckamaury/phpmagicfunctions",
@@ -845,5 +921,5 @@
         "ext-pdo": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

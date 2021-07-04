@@ -3,7 +3,7 @@
     "description": "mini-framework for Symfony",
     "type": "library",
     "license": "LGPL-3.0",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "minimum-stability": "stable",
     "authors": [
         {
@@ -19,7 +19,9 @@
         "ext-pdo": "*",
         "ckamaury/phpmagicfunctions": "^1.0",
         "ckamaury/phpdatetime": "^1.0",
-        "ckamaury/spreadsheet": "^1.0"
+        "ckamaury/spreadsheet": "^1.0",
+        "ckamaury/phpcurl": "^1.0",
+        "ckamaury/phphtml": "^1.0"
     },
     "autoload": {
         "psr-4": {

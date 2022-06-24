@@ -50,28 +50,8 @@ class APP {
         return $kernel;
     }
 
-    public static function getSecurityToken(){
-        return self::getKernel()->getContainer()->get('security.token_storage')->getToken();
-    }
-
-    public static function getUser(){
-        return self::getSecurityToken()->getUser();
-    }
-
     public static function getRouter(){
         return self::getKernel()->getContainer()->get('router');
-    }
-
-    public static function getOriginalUser($RepositoryUser){
-        $token = self::getSecurityToken();
-        if($token instanceof SwitchUserToken) {
-            $id = $token->getOriginalToken()->getUser()->getId();
-            $user = $RepositoryUser->find($id);
-        }
-        else{
-            return self::getUser();
-        }
-        return $user;
     }
 
     public static function getManager($base = null): EntityManager{

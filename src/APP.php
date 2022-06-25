@@ -13,6 +13,7 @@ use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
 class APP {
 
     public static bool $is_init = false;
+    public static $user;
 
     public static function init(){
         if(self::$is_init == FALSE){
@@ -41,6 +42,12 @@ class APP {
         return $dir.'/';
     }
 
+    public static function getUser(){
+        return self::$user;
+    }
+    public static function setUser($user){
+        self::$user = $user;
+    }
 
     public static function getKernel(){
         global $kernel;

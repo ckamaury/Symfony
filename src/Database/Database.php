@@ -29,8 +29,7 @@ class Database {
     public static function execute(string $sql,array $parameters = array()){
         $conn = APP::getManager()->getConnection();
         $stmt = $conn->prepare($sql);
-        $stmt->execute($parameters);
-        return $stmt->rowCount();
+        return $stmt->executeStatement($parameters);
     }
 
     public static function resetIds(string $table_name){

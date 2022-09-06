@@ -4,7 +4,7 @@ namespace CkAmaury\Symfony\Password;
 
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-class EncodePassword {
+class PasswordEncoder {
 
 
     public function __construct(private UserPasswordHasherInterface $passwordHasher){}

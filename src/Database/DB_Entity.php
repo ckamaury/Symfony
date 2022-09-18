@@ -61,4 +61,8 @@ class DB_Entity {
         return APP::getManager()->contains($this);
     }
 
+    public function isSame($entity):bool{
+        return ($this->getId() == $entity->getId());
+    }
+
 }

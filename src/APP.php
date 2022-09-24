@@ -32,16 +32,16 @@ class APP {
 
 
     public static function setDir(string $dir,int $level = 0): void {
+        self::$dir = str_replace('\\','/',$dir);
         self::$dir = self::upDir($dir,$level);
-
     }
     public static function getDir(int $level = 0) : string{
         if(is_null(self::$dir)){
-            $dir = self::getKernel()->getProjectDir();
-            self::$dir = str_replace('\\','/',$dir);
+            self::setDir(self::getKernel()->getProjectDir());
         }
         return self::upDir(self::$dir,$level);
     }
+
     private static function upDir(string $dir,int $level):string{
         if($level > 0){
             $array = explode('/',$dir);
@@ -50,8 +50,9 @@ class APP {
                 $level--;
             }
             $dir = implode('/',$array);
+            $dir .= '/';
         }
-        return $dir.'/';
+        return $dir;
     }
 
     public static function getUser(){

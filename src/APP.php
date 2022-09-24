@@ -32,7 +32,7 @@ class APP {
 
 
     public static function setDir(string $dir,int $level = 0): void {
-        self::$dir = str_replace('\\','/',$dir);
+        $dir = str_replace('\\','/',$dir);
         self::$dir = self::upDir($dir,$level);
     }
     public static function getDir(int $level = 0) : string{
@@ -41,11 +41,10 @@ class APP {
         }
         return self::upDir(self::$dir,$level);
     }
-
     private static function upDir(string $dir,int $level):string{
         if($level > 0){
             $array = explode('/',$dir);
-            while(count($array) > 0 && $level > 0){
+            while(count($array) > 0 && $level >= 0){
                 array_pop($array);
                 $level--;
             }

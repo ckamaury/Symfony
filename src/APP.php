@@ -39,17 +39,16 @@ class APP {
         if(is_null(self::$dir)){
             self::setDir(self::getKernel()->getProjectDir());
         }
-        return self::upDir(self::$dir,$level);
+        return self::upDir(self::$dir,$level).'/';
     }
     private static function upDir(string $dir,int $level):string{
         if($level > 0){
             $array = explode('/',$dir);
-            while(count($array) > 0 && $level >= 0){
+            while(count($array) > 0 && $level > 0){
                 array_pop($array);
                 $level--;
             }
             $dir = implode('/',$array);
-            $dir .= '/';
         }
         return $dir;
     }

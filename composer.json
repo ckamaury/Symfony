@@ -3,7 +3,7 @@
     "description": "mini-framework for Symfony",
     "type": "library",
     "license": "LGPL-3.0",
-    "version": "1.0.18",
+    "version": "1.0.19",
     "minimum-stability": "stable",
     "authors": [
         {
@@ -28,5 +28,8 @@
         "psr-4": {
             "CkAmaury\\Symfony\\": "src"
         }
+    },
+    "require-dev": {
+        "symfony/var-dumper": "^6.1"
     }
 }

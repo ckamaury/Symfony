@@ -15,6 +15,8 @@ class APP {
     public static bool $is_init = false;
     public static $user;
 
+    private static ?string $dir = null;
+
     public static function init(){
         if(self::$is_init == FALSE){
             setlocale(LC_TIME, "french");
@@ -28,18 +30,24 @@ class APP {
         return (new DateTime())->setTimestamp(DB_TIME);
     }
 
+
+    public static function setDir(string $dir): void {
+        self::$dir = $dir;
+    }
     public static function getDir(int $level = 0) : string{
-        $dir = self::getKernel()->getProjectDir();
-        $dir = str_replace('\\','/',$dir);
+        if(is_null(self::$dir)){
+            $dir = self::getKernel()->getProjectDir();
+            self::$dir = str_replace('\\','/',$dir);
+        }
         if($level > 0){
-            $array = explode('/',$dir);
+            $array = explode('/',self::$dir);
             while(count($array) > 0 && $level > 0){
                 array_pop($array);
                 $level--;
             }
             $dir = implode('/',$array);
         }
-        return $dir.'/';
+        return self::$dir.'/';
     }
 
     public static function getUser(){

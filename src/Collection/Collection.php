@@ -1,8 +1,6 @@
 <?php
 
-
 namespace CkAmaury\Symfony\Collection;
-
 
 class Collection  {
 
@@ -13,10 +11,6 @@ class Collection  {
         $this->array = $array;
     }
 
-    /**
-     * @param $value
-     * @param null $index
-     */
     public function add($value,$index = null) : self{
         if(is_null($index)) $this->array[] = $value;
         else $this->array[$index] = $value;

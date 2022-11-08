@@ -8,29 +8,15 @@ use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Types;
 
 
-class DateType extends \Doctrine\DBAL\Types\DateTimeType
-{
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
+class DateType extends \Doctrine\DBAL\Types\DateTimeType {
+
+    public function getName():string {
         return Types::DATE_MUTABLE;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform)
-    {
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform):string {
         return $platform->getDateTypeDeclarationSQL($fieldDeclaration);
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
-    {
+    public function convertToDatabaseValue($value, AbstractPlatform $platform):mixed {
         if ($value === null) {
             return $value;
         }
@@ -41,13 +27,7 @@ class DateType extends \Doctrine\DBAL\Types\DateTimeType
 
         throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', 'DateTime']);
     }
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public function convertToPHPValue($value, AbstractPlatform $platform)
-    {
+    public function convertToPHPValue($value, AbstractPlatform $platform):mixed{
         if ($value === null || $value instanceof DateTimeInterface) {
             return $value;
         }

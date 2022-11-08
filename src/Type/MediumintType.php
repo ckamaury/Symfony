@@ -7,35 +7,20 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 
 
-class MediumintType extends Type
-{
+class MediumintType extends Type {
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName() {
+
+    public function getName():string {
         return 'mediumint';
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform):string {
         $return = ($platform->getSmallIntTypeDeclarationSQL($fieldDeclaration));
         return ( str_replace ('SMALLINT','MEDIUMINT' ,$return));
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function convertToPHPValue($value, AbstractPlatform $platform) {
+    public function convertToPHPValue($value, AbstractPlatform $platform):mixed {
         return $value === null ? null : (int)$value;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBindingType() {
+    public function getBindingType():int {
         return ParameterType::INTEGER;
     }
 }

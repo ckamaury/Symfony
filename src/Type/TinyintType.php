@@ -6,35 +6,18 @@ use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\PhpIntegerMappingType;
 use Doctrine\DBAL\Types\Type;
 
-class TinyintType extends Type
-{
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName() {
+class TinyintType extends Type {
+    public function getName():string {
         return 'tinyint';
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform) {
+    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform):string {
         $return = ($platform->getSmallIntTypeDeclarationSQL($fieldDeclaration));
         return ( str_replace ('SMALLINT','TINYINT' ,$return));
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function convertToPHPValue($value, AbstractPlatform $platform) {
+    public function convertToPHPValue($value, AbstractPlatform $platform):mixed {
         return $value === null ? null : (int)$value;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBindingType() {
+    public function getBindingType():int {
         return ParameterType::INTEGER;
     }
 }

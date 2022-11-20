@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Mime\FileinfoMimeTypeGuesser;
 use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class APP {
 
@@ -148,6 +149,11 @@ class APP {
         }
         return $randomString;
     }
+
+    public static function generateUrl(string $route, array $parameters = [], int $referenceType = UrlGeneratorInterface::ABSOLUTE_PATH): string {
+        return self::getRouter()->generate($route, $parameters, $referenceType);
+    }
+
 
 }
 

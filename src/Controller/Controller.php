@@ -28,5 +28,4 @@ abstract class Controller extends AbstractController {
         return $this->request;
     }
 
-
 }

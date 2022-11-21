@@ -2,8 +2,8 @@
 
 namespace CkAmaury\Symfony;
 
+use CkAmaury\PhpDatetime\DateTime;
 use CkAmaury\Spreadsheet\File;
-use DateTime;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
@@ -27,7 +27,7 @@ class APP {
         }
     }
 
-    public static function getDB_Time(){
+    public static function getDB_Time():DateTime{
         return (new DateTime())->setTimestamp(DB_TIME);
     }
 

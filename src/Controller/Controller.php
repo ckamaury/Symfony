@@ -13,7 +13,6 @@ abstract class Controller extends AbstractController {
     protected function checkFormIsValid(FormInterface $form):bool{
         return $form->isSubmitted() && $form->isValid();
     }
-
     protected function createForm(string $type, $data = null, array $options = ['method' => 'POST']): FormInterface{
         $form = parent::createForm($type, $data, $options);
         $form->handleRequest($this->request);
@@ -23,7 +22,6 @@ abstract class Controller extends AbstractController {
     protected function setRequest(Request $request){
         $this->request = $request;
     }
-
     public function getRequest():Request{
         return $this->request;
     }

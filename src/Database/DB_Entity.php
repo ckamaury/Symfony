@@ -11,20 +11,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class DB_Entity {
 
-    public function remove(bool $pFlush = false){
+    public function remove(bool $pFlush = false, ?string $manager = null):self{
         APP::getManager()->remove($this);
-        if($pFlush){
-            APP::getManager()->flush();
-        }
+        if($pFlush) $this->flush($manager);
+        return $this;
     }
-
-    public function save(bool $pFlush = false, ?string $manager = null){
+    public function save(bool $pFlush = false, ?string $manager = null):self{
         if($this->getId() == 0){
             APP::getManager($manager)->persist($this);
         }
-        if($pFlush){
-            APP::getManager($manager)->flush();
-        }
+        if($pFlush) $this->flush($manager);
+        return $this;
     }
 
     protected function convertDate($p_Value){
@@ -44,7 +41,6 @@ class DB_Entity {
             return $p_Value;
         }
     }
-
     protected function convertObject($p_Value,$p_Class){
         if(is_null($p_Value)){
             return NULL;
@@ -57,12 +53,20 @@ class DB_Entity {
         }
     }
 
-    public function isLoaded() : bool{
+    public function isLoaded():bool{
         return APP::getManager()->contains($this);
     }
 
+    /** @deprecated  */
     public function isSame($entity):bool{
+        return $this->hasSameId($entity);
+    }
+    public function hasSameId($entity):bool{
         return ($this->getId() == $entity->getId());
+    }
+
+    protected function flush(?string $manager = null){
+        APP::getManager($manager)->flush();
     }
 
 }

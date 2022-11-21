@@ -2,6 +2,7 @@
 
 namespace CkAmaury\Symfony\Database;
 
+use CkAmaury\PhpDatetime\DateTime;
 use CkAmaury\Symfony\APP;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,17 +11,15 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class DB_Timed extends DB_Entity {
 
+    /**
+     * @ORM\Column(type="datetime",options={"default": "CURRENT_TIMESTAMP"})
+     */
+    protected ?DateTime $ins_at = null;
 
     /**
      * @ORM\Column(type="datetime",options={"default": "CURRENT_TIMESTAMP"})
      */
-    protected $ins_at;
-
-    /**
-     * @ORM\Column(type="datetime",options={"default": "CURRENT_TIMESTAMP"})
-     */
-    protected $upd_at;
-
+    protected ?DateTime $upd_at = null;
 
     /**
      * @ORM\PrePersist()
@@ -37,25 +36,19 @@ class DB_Timed extends DB_Entity {
         $this->setUpdAt(APP::getDB_Time());
     }
 
-    public function getInsAt(): ?\DateTimeInterface
-    {
+    public function getInsAt(): ?DateTime{
         return $this->ins_at;
     }
-    public function setInsAt(\DateTimeInterface $ins_at): self
-    {
+    public function setInsAt(DateTime $ins_at): self {
         $this->ins_at = $ins_at;
-
         return $this;
     }
 
-    public function getUpdAt(): ?\DateTimeInterface
-    {
+    public function getUpdAt(): ?DateTime{
         return $this->upd_at;
     }
-    public function setUpdAt(\DateTimeInterface $upd_at): self
-    {
+    public function setUpdAt(DateTime $upd_at): self{
         $this->upd_at = $upd_at;
-
         return $this;
     }
 
@@ -63,14 +56,12 @@ class DB_Timed extends DB_Entity {
         $this->ins_at = null;
         $this->upd_at = null;
     }
-
-    public function save(bool $pFlush = false, ?string $manager = null){
+    public function save(bool $pFlush = false, ?string $manager = null):self{
         if(is_null($this->ins_at)){
             APP::getManager($manager)->persist($this);
         }
-        if($pFlush){
-            APP::getManager($manager)->flush();
-        }
+        if($pFlush) $this->flush($manager);
+        return $this;
     }
 
 }

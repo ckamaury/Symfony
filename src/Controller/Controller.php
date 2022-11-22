@@ -26,4 +26,17 @@ abstract class Controller extends AbstractController {
         return $this->request;
     }
 
+    protected function addSuccessFlash(string $message):void{
+        $this->addFlash('success',$message);
+    }
+    protected function addDangerFlash(string $message):void{
+        $this->addFlash('danger',$message);
+    }
+    protected function addInfoFlash(string $message):void{
+        $this->addFlash('info',$message);
+    }
+    protected function addWarningFlash(string $message):void{
+        $this->addFlash('warning',$message);
+    }
+
 }

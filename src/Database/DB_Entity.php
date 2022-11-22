@@ -64,6 +64,9 @@ class DB_Entity {
     public function hasSameId($entity):bool{
         return ($this->getId() == $entity->getId());
     }
+    public function hasNotSameId($entity):bool{
+        return $this->hasSameId($entity);
+    }
 
     protected function flush(?string $manager = null){
         APP::getManager($manager)->flush();

@@ -56,6 +56,9 @@ class DB_Entity {
     public function isLoaded():bool{
         return APP::getManager()->contains($this);
     }
+    public function existsInDatabase():bool{
+        return APP::getManager()->contains($this);
+    }
 
     /** @deprecated  */
     public function isSame($entity):bool{

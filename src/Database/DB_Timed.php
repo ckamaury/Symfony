@@ -7,7 +7,8 @@ use CkAmaury\Symfony\APP;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\MappedSuperclass
  */
 class DB_Timed extends DB_Entity {
 

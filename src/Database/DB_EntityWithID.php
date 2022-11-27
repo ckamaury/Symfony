@@ -5,7 +5,8 @@ namespace CkAmaury\Symfony\Database;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\HasLifecycleCallbacks()
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\MappedSuperclass
  */
 class DB_EntityWithID extends DB_Entity {
 

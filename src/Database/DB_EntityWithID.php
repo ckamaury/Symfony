@@ -13,8 +13,9 @@ class DB_EntityWithID extends DB_Entity {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
+     * @ORM\Column(type="integer",options={"unsigned"=true})
      */
-    private ?int $id = null;
+    protected ?int $id = null;
 
     public function getId(): ?int {
         return $this->id;

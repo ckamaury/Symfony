@@ -19,6 +19,10 @@ abstract class Controller extends AbstractController {
         return $form;
     }
 
+    protected function checkTokenIsValid(string $name):bool{
+        return $this->isCsrfTokenValid('admin_ticket', $this->request->request->get('_token'));
+    }
+
     protected function setRequest(Request $request){
         $this->request = $request;
     }

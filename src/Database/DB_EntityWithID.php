@@ -26,10 +26,13 @@ class DB_EntityWithID extends DB_Entity {
     }
 
     public function hasSameId($entity):bool{
-        return ($this->getId() == $entity->getId());
+        return (get_class($this) == get_class($entity)) && $this->is($entity->getId());
     }
     public function hasNotSameId($entity):bool{
         return !$this->hasSameId($entity);
+    }
+    public function is(int $id):bool{
+        return ($id == $this->getId());
     }
 
 

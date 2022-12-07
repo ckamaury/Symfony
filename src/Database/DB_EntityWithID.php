@@ -34,6 +34,9 @@ class DB_EntityWithID extends DB_Entity {
     public function is(int $id):bool{
         return ($id == $this->getId());
     }
+    public function isNot(int $id):bool{
+        return !$this->is($id);
+    }
 
 
 }

@@ -25,6 +25,9 @@ class DB_Entity {
         return $this;
     }
 
+    public static function convert(int $id):static{
+        return APP::getReference(static::class,$id);
+    }
     protected function convertDate($p_Value){
         if(is_object($p_Value) && gettype($p_Value) == DateTime::class){
             return $p_Value;

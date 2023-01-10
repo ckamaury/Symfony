@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Mime\FileinfoMimeTypeGuesser;
-use Symfony\Component\Security\Core\Authentication\Token\SwitchUserToken;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class APP {

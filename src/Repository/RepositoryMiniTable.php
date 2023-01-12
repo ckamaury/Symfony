@@ -4,7 +4,6 @@ namespace CkAmaury\Symfony\Repository;
 
 use App\Entity\TicketStatusType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 
 class RepositoryMiniTable extends ServiceEntityRepository {
 
@@ -15,6 +14,15 @@ class RepositoryMiniTable extends ServiceEntityRepository {
             $this->values = parent::findAll();
         }
         return $this->values;
+    }
+
+    public function resetValues(){
+        unset($this->values);
+        $this->findAll();
+    }
+
+    public function addValue($value){
+        $this->values[] = $value;
     }
 
 }

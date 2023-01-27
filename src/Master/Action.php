@@ -7,10 +7,12 @@ use CkAmaury\Symfony\Database\Database;
 
 abstract class Action {
 
+    protected Access $access;
     private bool $isSuccess = FALSE;
     private array $messages = [];
 
     abstract protected function getAccess();
+    abstract protected function createAccess();
 
     protected function addOneMessage(string $message):void{
         $this->messages[] = $message;
@@ -28,7 +30,7 @@ abstract class Action {
                 $this->rejectWithError($e);
             }
         }
-        return $this;
+        return $this->destroyAccess();
     }
     protected function rejectWithError(\Error|\Exception $error):void{
         $this->rejectWithMessage("Erreur logicielle, merci de contacter l'administrateur.");
@@ -42,6 +44,11 @@ abstract class Action {
     }
     protected function isSuccess():bool{
         return $this->isSuccess;
+    }
+    protected function destroyAccess():self{
+        $this->messages = array_merge($this->getAccess()->getMessages(),$this->messages);
+        unset($this->access);
+        return $this;
     }
 
     public function setItIsSuccess(): self {
@@ -59,6 +66,6 @@ abstract class Action {
         return !$this->succeeded();
     }
     public function getMessages(): array {
-        return array_merge($this->getAccess()->getMessages(),$this->messages) ;
+        return $this->messages;
     }
 }

@@ -23,7 +23,7 @@ abstract class Action {
         $this->addOneMessage($message);
     }
     protected function flush():self{
-        if($this->isSuccess()){
+        if($this->isSuccess() && $this->getAccess()->granted()){
             try{
                 Database::flush();
             }

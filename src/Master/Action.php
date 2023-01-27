@@ -7,22 +7,10 @@ use CkAmaury\Symfony\Database\Database;
 
 abstract class Action {
 
-    protected Access $access;
-
     private bool $isSuccess = FALSE;
     private array $messages = [];
 
     abstract protected function getAccess();
-    abstract protected function createAccess();
-
-    public function setItIsSuccess(): self {
-        $this->isSuccess = TRUE;
-        return $this;
-    }
-    public function setItIsFailure(): self {
-        $this->isSuccess = FALSE;
-        return $this;
-    }
 
     protected function addOneMessage(string $message):void{
         $this->messages[] = $message;
@@ -31,7 +19,7 @@ abstract class Action {
         $this->setItIsFailure();
         $this->addOneMessage($message);
     }
-    protected function flush():void{
+    protected function flush():self{
         if($this->isSuccess()){
             try{
                 Database::flush();
@@ -40,6 +28,7 @@ abstract class Action {
                 $this->rejectWithError($e);
             }
         }
+        return $this;
     }
     protected function rejectWithError(\Error|\Exception $error):void{
         $this->rejectWithMessage("Erreur logicielle, merci de contacter l'administrateur.");
@@ -51,12 +40,17 @@ abstract class Action {
     protected function isProdEnv():bool{
         return APP::getKernel()->getEnvironment() === 'prod';
     }
-
-    public function getMessages(): array {
-        return array_merge($this->getAccess()->getMessages(),$this->messages) ;
-    }
     protected function isSuccess():bool{
         return $this->isSuccess;
+    }
+
+    public function setItIsSuccess(): self {
+        $this->isSuccess = TRUE;
+        return $this;
+    }
+    public function setItIsFailure(): self {
+        $this->isSuccess = FALSE;
+        return $this;
     }
     public function succeeded():bool{
         return $this->getAccess()->granted() && $this->isSuccess();
@@ -64,5 +58,7 @@ abstract class Action {
     public function failure():bool{
         return !$this->succeeded();
     }
-
+    public function getMessages(): array {
+        return array_merge($this->getAccess()->getMessages(),$this->messages) ;
+    }
 }

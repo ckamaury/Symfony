@@ -5,14 +5,20 @@ namespace CkAmaury\Symfony\Master;
 abstract class Access {
 
     private bool $hasAccess = FALSE;
-
     private array $messages = [];
 
     protected function authorizedAccess(): void {
         $this->hasAccess = TRUE;
     }
+    protected function rejectedAccess(): void {
+        $this->hasAccess = FALSE;
+    }
     protected function addOneMessage(string $message):void{
         $this->messages[] = $message;
+    }
+    protected function rejectWithMessage(string $message):void{
+        $this->rejectedAccess();
+        $this->addOneMessage($message);
     }
 
     public function granted(): bool {
@@ -24,6 +30,5 @@ abstract class Access {
     public function getMessages(): array {
         return $this->messages;
     }
-
 
 }

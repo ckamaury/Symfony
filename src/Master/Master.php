@@ -12,26 +12,26 @@ class Master {
     public function getRejectedMessages(): array {
         return $this->rejectedMessages;
     }
-    private function addRejectedMessage(string $message): self {
+    protected function addRejectedMessage(string $message): self {
         $this->rejectedMessages[] = $message;
         return $this;
     }
-    private function addRejectedMessageAction(): void {
+    protected function addRejectedMessageAction(): void {
         $this->rejectedMessages[] = 'Erreur lors des actions demandées. Merci de contacter un administrateur.';
     }
-    private function addRejectedMessageFlush(): void {
+    protected function addRejectedMessageFlush(): void {
         $this->rejectedMessages[] = 'Erreur lors de la sauvegarde en base de données. Merci de contacter un administrateur.';
     }
-    private function addRejectedMessages(array $messages): self {
+    protected function addRejectedMessages(array $messages): self {
         $this->rejectedMessages = $messages;
         return $this;
     }
-    private function clearRejectedMessages():self{
+    protected function clearRejectedMessages():self{
         $this->rejectedMessages = [];
         return $this;
     }
 
-    private function flush():bool{
+    protected function flush():bool{
         $env = APP::getKernel()->getEnvironment();
         if($env === 'dev') Database::flush();
         else{

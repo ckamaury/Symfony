@@ -43,4 +43,25 @@ abstract class Controller extends AbstractController {
         $this->addFlash('warning',$message);
     }
 
+    protected function addSuccessFlashes(array $messages):void{
+        foreach($messages as $message){
+            $this->addSuccessFlash($message);
+        }
+    }
+    protected function addDangerFlashes(array $messages):void{
+        foreach($messages as $message){
+            $this->addDangerFlash($message);
+        }
+    }
+    protected function addInfoFlashes(array $messages):void{
+        foreach($messages as $message){
+            $this->addInfoFlash($message);
+        }
+    }
+    protected function addWarningFlashes(array $messages):void{
+        foreach($messages as $message){
+            $this->addWarningFlash($message);
+        }
+    }
+
 }

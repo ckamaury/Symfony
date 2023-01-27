@@ -12,9 +12,8 @@ abstract class Action {
     private bool $isSuccess = FALSE;
     private array $messages = [];
 
-    protected function getAccess(){
-        return $this->access;
-    }
+    abstract protected function getAccess();
+    abstract protected function createAccess();
 
     protected function addOneMessage(string $message):void{
         $this->messages[] = $message;

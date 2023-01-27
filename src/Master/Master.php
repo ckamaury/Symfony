@@ -9,7 +9,6 @@ abstract class Master {
 
     public array $rejectedMessages = [];
 
-    abstract protected function getAccesses();
     abstract protected function getActions();
 
     public function getRejectedMessages(): array {
@@ -67,5 +66,8 @@ abstract class Master {
         else $this->addRejectedMessages($this->getAccesses()->getRejectedMessages());
         return $this->hasNoRejectedMessages();
     }
+
+
+
 
 }

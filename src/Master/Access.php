@@ -2,37 +2,19 @@
 
 namespace CkAmaury\Symfony\Master;
 
-class Access {
+abstract class Access {
 
-    public const AUTHORIZED = true;
-    public const REJECTED = false;
+    private bool $hasAccess = FALSE;
 
-    public array $rejectedMessages = [];
-
-    public function getRejectedMessages(): array {
-        return $this->rejectedMessages;
-    }
-    public function addRejectedMessage(string $message): void {
-        $this->rejectedMessages[] = $message;
-    }
-    public function clearRejectedMessages(): void {
-        $this->rejectedMessages = [];
+    protected function authorizedAccess(): void {
+        $this->hasAccess = TRUE;
     }
 
-    public function requestNewAccess():void{
-        $this->clearRejectedMessages();
+    public function granted(): bool {
+        return $this->hasAccess;
     }
-
-    private function hasRejectedMessages():bool{
-        return !empty($this->rejectedMessages);
+    public function rejected(): bool {
+        return !$this->granted();
     }
-
-    public function isAuthorized():bool{
-        return  !$this->hasRejectedMessages();
-    }
-    public function isRejected():bool{
-        return  !$this->isAuthorized();
-    }
-
 
 }

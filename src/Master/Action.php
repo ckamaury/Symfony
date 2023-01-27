@@ -15,8 +15,12 @@ abstract class Action {
     abstract protected function getAccess();
     abstract protected function createAccess();
 
-    public function setIsSuccess(bool $isSuccess): self {
-        $this->isSuccess = $isSuccess;
+    public function setItIsSuccess(): self {
+        $this->isSuccess = TRUE;
+        return $this;
+    }
+    public function setItIsFailure(): self {
+        $this->isSuccess = FALSE;
         return $this;
     }
 
@@ -24,15 +28,17 @@ abstract class Action {
         $this->messages[] = $message;
     }
     protected function rejectWithMessage(string $message):void{
-        $this->setIsSuccess(FALSE);
+        $this->setItIsFailure();
         $this->addOneMessage($message);
     }
     protected function flush():void{
-        try{
-            Database::flush();
-        }
-        catch(\Error|\Exception $e){
-            $this->rejectWithError($e);
+        if($this->isSuccess()){
+            try{
+                Database::flush();
+            }
+            catch(\Error|\Exception $e){
+                $this->rejectWithError($e);
+            }
         }
     }
     protected function rejectWithError(\Error|\Exception $error):void{
@@ -49,7 +55,7 @@ abstract class Action {
     public function getMessages(): array {
         return array_merge($this->getAccess()->getMessages(),$this->messages) ;
     }
-    private function isSuccess():bool{
+    protected function isSuccess():bool{
         return $this->isSuccess;
     }
     public function succeeded():bool{

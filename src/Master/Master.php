@@ -5,9 +5,12 @@ namespace CkAmaury\Symfony\Master;
 use CkAmaury\Symfony\APP;
 use CkAmaury\Symfony\Database\Database;
 
-class Master {
+abstract class Master {
 
     public array $rejectedMessages = [];
+
+    abstract protected function getAccesses();
+    abstract protected function getActions();
 
     public function getRejectedMessages(): array {
         return $this->rejectedMessages;
@@ -54,4 +57,15 @@ class Master {
     protected function isProdEnv():bool{
         return APP::getKernel()->getEnvironment() === 'prod';
     }
+
+    protected function requestActions(){
+        $this->clearRejectedMessages();
+        $this->getAccesses()->requestNewAccess();
+    }
+    protected function finishActions():bool{
+        if($this->getAccesses()->isAuthorized()) $this->flush();
+        else $this->addRejectedMessages($this->getAccesses()->getRejectedMessages());
+        return $this->hasNoRejectedMessages();
+    }
+
 }

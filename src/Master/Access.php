@@ -12,9 +12,26 @@ class Access {
     public function getRejectedMessages(): array {
         return $this->rejectedMessages;
     }
-    public function addRejectedMessage(string $message): self {
+    public function addRejectedMessage(string $message): void {
         $this->rejectedMessages[] = $message;
-        return $this;
+    }
+    public function clearRejectedMessages(): void {
+        $this->rejectedMessages = [];
+    }
+
+    public function requestNewAccess():void{
+        $this->clearRejectedMessages();
+    }
+
+    private function hasRejectedMessages():bool{
+        return !empty($this->rejectedMessages);
+    }
+
+    public function isAuthorized():bool{
+        return  !$this->hasRejectedMessages();
+    }
+    public function isRejected():bool{
+        return  !$this->isAuthorized();
     }
 
 

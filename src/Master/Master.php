@@ -38,8 +38,7 @@ class Master {
     }
 
     protected function flush():bool{
-        $env = APP::getKernel()->getEnvironment();
-        if($env === 'dev') Database::flush();
+        if($this->isDevEnv()) Database::flush();
         else{
             try{Database::flush();}
             catch(\ErrorException $e){
@@ -48,5 +47,11 @@ class Master {
             }
         }
         return TRUE;
+    }
+    protected function isDevEnv():bool{
+        return APP::getKernel()->getEnvironment() === 'dev';
+    }
+    protected function isProdEnv():bool{
+        return APP::getKernel()->getEnvironment() === 'prod';
     }
 }

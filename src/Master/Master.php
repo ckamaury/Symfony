@@ -30,6 +30,9 @@ class Master {
         $this->rejectedMessages = [];
         return $this;
     }
+    protected function hasRejectedMessages():bool{
+        return !empty($this->rejectedMessages);
+    }
 
     protected function flush():bool{
         $env = APP::getKernel()->getEnvironment();

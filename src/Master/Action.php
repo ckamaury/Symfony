@@ -9,6 +9,7 @@ abstract class Action {
 
     protected Access $access;
     private bool $isSuccess = FALSE;
+    private bool $isFinished = FALSE;
     private array $messages = [];
 
     abstract protected function getAccess();
@@ -30,7 +31,7 @@ abstract class Action {
                 $this->rejectWithError($e);
             }
         }
-        return $this->destroyAccess();
+        return $this->setItIsFinished()->destroyAccess();
     }
     protected function rejectWithError(\Error|\Exception $error):void{
         $this->rejectWithMessage("Erreur logicielle, merci de contacter l'administrateur.");
@@ -43,6 +44,9 @@ abstract class Action {
         return APP::getKernel()->getEnvironment() === 'prod';
     }
     protected function isSuccess():bool{
+        return $this->isSuccess;
+    }
+    protected function isFinished():bool{
         return $this->isSuccess;
     }
     protected function destroyAccess():self{
@@ -59,8 +63,12 @@ abstract class Action {
         $this->isSuccess = FALSE;
         return $this;
     }
+    public function setItIsFinished(): self {
+        $this->isFinished = TRUE;
+        return $this;
+    }
     public function succeeded():bool{
-        return $this->getAccess()->granted() && $this->isSuccess();
+        return $this->isFinished() && $this->isSuccess();
     }
     public function failure():bool{
         return !$this->succeeded();

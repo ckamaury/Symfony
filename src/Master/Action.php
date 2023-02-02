@@ -12,7 +12,7 @@ abstract class Action {
     private bool $isSuccess = FALSE;
     private bool $isFinished = FALSE;
     private array $messages = [];
-    private string $successMessage;
+    private ?string $successMessage = null;
 
     abstract protected function getAccess();
     abstract protected function createAccess();
@@ -60,7 +60,7 @@ abstract class Action {
         return $this->isFinished() && $this->isSuccess();
     }
 
-    public function setItIsSuccess(?string $successMessage): self {
+    public function setItIsSuccess(?string $successMessage = null): self {
         $this->isSuccess = TRUE;
         $this->successMessage = $successMessage;
         return $this;

@@ -73,7 +73,7 @@ abstract class Action {
         $this->isFinished = TRUE;
         return $this;
     }
-    public function succeeded(Controller $controller = null):bool{
+    public function succeeded(?Controller $controller = null):bool{
         $success = $this->isSuccessAndFinished();
         if(!is_null($controller)){
             if($success) $controller->addSuccessFlash($this->successMessage);
@@ -81,8 +81,8 @@ abstract class Action {
         }
         return $success;
     }
-    public function failure(Controller $controller = null):bool{
-        return !$this->succeeded();
+    public function failure(?Controller $controller = null):bool{
+        return !$this->succeeded($controller);
     }
     public function getMessages(): array {
         return $this->messages;

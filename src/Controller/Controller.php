@@ -30,35 +30,35 @@ abstract class Controller extends AbstractController {
         return $this->request;
     }
 
-    protected function addSuccessFlash(string $message):void{
+    public function addSuccessFlash(string $message):void{
         $this->addFlash('success',$message);
     }
-    protected function addDangerFlash(string $message):void{
+    public function addDangerFlash(string $message):void{
         $this->addFlash('danger',$message);
     }
-    protected function addInfoFlash(string $message):void{
+    public function addInfoFlash(string $message):void{
         $this->addFlash('info',$message);
     }
-    protected function addWarningFlash(string $message):void{
+    public function addWarningFlash(string $message):void{
         $this->addFlash('warning',$message);
     }
 
-    protected function addSuccessFlashes(array $messages):void{
+    public function addSuccessFlashes(array $messages):void{
         foreach($messages as $message){
             $this->addSuccessFlash($message);
         }
     }
-    protected function addDangerFlashes(array $messages):void{
+    public function addDangerFlashes(array $messages):void{
         foreach($messages as $message){
             $this->addDangerFlash($message);
         }
     }
-    protected function addInfoFlashes(array $messages):void{
+    public function addInfoFlashes(array $messages):void{
         foreach($messages as $message){
             $this->addInfoFlash($message);
         }
     }
-    protected function addWarningFlashes(array $messages):void{
+    public function addWarningFlashes(array $messages):void{
         foreach($messages as $message){
             $this->addWarningFlash($message);
         }

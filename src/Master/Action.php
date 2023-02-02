@@ -3,6 +3,7 @@
 namespace CkAmaury\Symfony\Master;
 
 use CkAmaury\Symfony\APP;
+use CkAmaury\Symfony\Controller\Controller;
 use CkAmaury\Symfony\Database\Database;
 
 abstract class Action {
@@ -11,6 +12,7 @@ abstract class Action {
     private bool $isSuccess = FALSE;
     private bool $isFinished = FALSE;
     private array $messages = [];
+    private string $successMessage;
 
     abstract protected function getAccess();
     abstract protected function createAccess();
@@ -47,16 +49,20 @@ abstract class Action {
         return $this->isSuccess;
     }
     protected function isFinished():bool{
-        return $this->isSuccess;
+        return $this->isFinished;
     }
     protected function destroyAccess():self{
         $this->messages = array_merge($this->getAccess()->getMessages(),$this->messages);
         unset($this->access);
         return $this;
     }
+    protected function isSuccessAndFinished():bool{
+        return $this->isFinished() && $this->isSuccess();
+    }
 
-    public function setItIsSuccess(): self {
+    public function setItIsSuccess(?string $successMessage): self {
         $this->isSuccess = TRUE;
+        $this->successMessage = $successMessage;
         return $this;
     }
     public function setItIsFailure(): self {
@@ -67,10 +73,15 @@ abstract class Action {
         $this->isFinished = TRUE;
         return $this;
     }
-    public function succeeded():bool{
-        return $this->isFinished() && $this->isSuccess();
+    public function succeeded(Controller $controller = null):bool{
+        $success = $this->isSuccessAndFinished();
+        if(!is_null($controller)){
+            if($success) $controller->addSuccessFlash($this->successMessage);
+            else $controller->addDangerFlashes($this->messages);
+        }
+        return $success;
     }
-    public function failure():bool{
+    public function failure(Controller $controller = null):bool{
         return !$this->succeeded();
     }
     public function getMessages(): array {

@@ -21,7 +21,7 @@ abstract class UserSecurityMaster {
     }
 
     private function loadSecurityAccesses():self{
-        $this->securityAccesses = APP::getRepository(SecurityAccess::class)->getAllByRoles($this->getRoles());
+        $this->securityAccesses = APP::getRepository(SecurityAccess::class)->getAllByRoles($this->getSecurityRoles());
         return $this;
     }
 

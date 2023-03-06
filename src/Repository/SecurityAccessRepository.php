@@ -40,6 +40,8 @@ class SecurityAccessRepository extends RepositoryMiniTable {
      */
     public function getAllByRoles(array $roles):array{
 
+        if(empty($roles)) return [];
+
         $sub_query = APP::getRepository(SecurityRoleAccess::class)->getDQL_AllByRoles($roles);
 
         return $this->createQueryBuilder('security_access')

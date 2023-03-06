@@ -85,6 +85,10 @@ class APP {
         return self::getKernel()->getContainer();
     }
 
+    public static function getRepository(string $class){
+        return self::getManager()->getRepository($class);
+    }
+
     public static function isManagerOpened():bool{
         return self::getManager()->isOpen();
     }

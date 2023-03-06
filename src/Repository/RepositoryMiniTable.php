@@ -2,7 +2,6 @@
 
 namespace CkAmaury\Symfony\Repository;
 
-use App\Entity\TicketStatusType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 class RepositoryMiniTable extends ServiceEntityRepository {

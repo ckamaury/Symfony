@@ -8,7 +8,10 @@ use CkAmaury\Symfony\Entity\SecurityRole;
 
 abstract class UserSecurityMaster {
 
+    /** @var SecurityRole[]  */
     protected array $securityRoles = [];
+
+    /** @var SecurityAccess[]  */
     protected array $securityAccesses = [];
 
     abstract protected function importRolesOfUser();
@@ -30,6 +33,13 @@ abstract class UserSecurityMaster {
     }
     public function getSecurityAccesses(): array {
         return $this->securityAccesses;
+    }
+    public function getSecurityRolesString(): string {
+        $return = [];
+        foreach($this->getSecurityRoles() as $role){
+            $return[] = $role->getDescription();
+        }
+        return implode(' | ',$return);
     }
 
     public function getRoles():array{

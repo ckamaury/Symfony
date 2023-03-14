@@ -14,8 +14,12 @@ abstract class Action {
     private array $messages = [];
     private ?string $successMessage = null;
 
-    abstract protected function getAccess();
     abstract protected function createAccess();
+
+    protected function getAccess():Access{
+        if(!isset($this->access)) $this->createAccess();
+        return $this->access;
+    }
 
     protected function addOneMessage(string $message):void{
         $this->messages[] = $message;
@@ -24,7 +28,7 @@ abstract class Action {
         $this->setItIsFailure();
         $this->addOneMessage($message);
     }
-    protected function flush():self{
+    protected function flush():static{
         if($this->isSuccess() && $this->getAccess()->granted()){
             try{
                 Database::flush();
@@ -65,11 +69,11 @@ abstract class Action {
         $this->successMessage = $successMessage;
         return $this;
     }
-    public function setItIsFailure(): self {
+    public function setItIsFailure(): static {
         $this->isSuccess = FALSE;
         return $this;
     }
-    public function setItIsFinished(): self {
+    public function setItIsFinished(): static {
         $this->isFinished = TRUE;
         return $this;
     }

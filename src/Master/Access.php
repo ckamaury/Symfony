@@ -2,6 +2,8 @@
 
 namespace CkAmaury\Symfony\Master;
 
+use CkAmaury\Symfony\APP;
+
 abstract class Access {
 
     private bool $hasAccess = FALSE;
@@ -29,6 +31,9 @@ abstract class Access {
     }
     public function getMessages(): array {
         return $this->messages;
+    }
+    public function getUserSession(){
+        return APP::getUser();
     }
 
 }

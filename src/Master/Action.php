@@ -91,4 +91,7 @@ abstract class Action {
     public function getMessages(): array {
         return $this->messages;
     }
+    public function getUserSession(){
+        return APP::getUser();
+    }
 }

@@ -22,6 +22,23 @@ class SecurityAccessRepository extends RepositoryMiniTable {
         parent::__construct($registry, SecurityAccess::class);
     }
 
+
+    /** @return SecurityAccess[] */
+    public function findAll():array{
+        if(!isset($this->values)){
+            $this->values = parent::findAll();
+            $this->orderByFullName($this->values);
+        }
+        return $this->values;
+    }
+
+    public function orderByFullName(array &$list){
+        usort($list, function(SecurityAccess $a, SecurityAccess $b) {
+            return strcmp($a->getFullName(), $b->getFullName());
+        });
+    }
+
+
     /** @return SecurityAccess[] */
     public function getAllByRole(SecurityRole $role):array{
 

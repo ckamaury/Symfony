@@ -21,6 +21,27 @@ abstract class Action {
         return $this->access;
     }
 
+    protected function execute($function,array $args = []):self{
+        $functionCalling = debug_backtrace()[1]['function'];
+        if($this->getAccess()->{$functionCalling}()->granted()){
+            if($_ENV == 'prod'){
+                try{
+                    $function(...$args);
+                    $this->setItIsSuccess('Action validée');
+                }
+                catch(\Error|\Exception $e){
+                    $this->rejectWithError($e);
+                }
+            }
+            else {
+                $function(...$args);
+                $this->setItIsSuccess('Action validée');
+            }
+
+        }
+        return $this->flush();
+    }
+
     protected function addOneMessage(string $message):void{
         $this->messages[] = $message;
     }

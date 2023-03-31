@@ -7,6 +7,7 @@ use CkAmaury\Spreadsheet\File;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Mime\FileinfoMimeTypeGuesser;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
@@ -24,6 +25,11 @@ class APP {
             define('DB_TIME',(new DateTime())->getTimestamp());
             self::$is_init = TRUE;
         }
+    }
+    public static function initWithKernel($kernel){
+        self::init();
+        global $kernel;
+        $kernel->boot();
     }
 
     public static function getDB_Time():DateTime{
@@ -59,6 +65,7 @@ class APP {
     public static function setUser($user){
         self::$user = $user;
     }
+
 
     public static function getKernel(){
         global $kernel;

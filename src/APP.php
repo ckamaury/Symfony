@@ -28,7 +28,7 @@ class APP {
     }
     public static function initWithKernel($kernel){
         self::init();
-        global $kernel;
+        $GLOBALS['kernel'] = $kernel;
         $kernel->boot();
     }
 

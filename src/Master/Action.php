@@ -26,16 +26,14 @@ abstract class Action {
         if($this->getAccess()->{$functionCalling}()->granted()){
             if($_ENV == 'prod'){
                 try{
-                    $function(...$args);
-                    $this->setItIsSuccess('Action validée');
+                    if($function(...$args)) $this->setItIsSuccess('Action validée');
                 }
                 catch(\Error|\Exception $e){
                     $this->rejectWithError($e);
                 }
             }
             else {
-                $function(...$args);
-                $this->setItIsSuccess('Action validée');
+                if($function(...$args)) $this->setItIsSuccess('Action validée');
             }
 
         }

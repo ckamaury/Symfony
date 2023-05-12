@@ -21,22 +21,27 @@ abstract class Action {
         return $this->access;
     }
 
-    public function __call(string $name, array $arguments) {
+    public function __call(string $name, array $arguments):static{
         if(method_exists($this,$name)){
             if($this->getAccess()->{$name}()->granted()){
-                if($_ENV == 'prod'){
+                if($this->isProdEnv()){
                     try{
-                        if($this->{$name}(...$arguments)) $this->setItIsSuccess('Action validée');
+                        if($this->{$name}(...$arguments)) {
+                            $this->setItIsSuccess('Action validée');
+                            $this->flush();
+                        }
                     }
                     catch(\Error|\Exception $e){
                         $this->rejectWithError($e);
                     }
                 }
                 else {
-                    if($this->{$name}(...$arguments)) $this->setItIsSuccess('Action validée');
+                    if($this->{$name}(...$arguments)) {
+                        $this->setItIsSuccess('Action validée');
+                        $this->flush();
+                    }
                 }
             }
-            return $this->flush();
         }
         else{
             $this->rejectWithMessage("Erreur logicielle, merci de contacter l'administrateur.");

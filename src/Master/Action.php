@@ -21,23 +21,28 @@ abstract class Action {
         return $this->access;
     }
 
-    protected function execute($function,array $args = []):self{
-        $functionCalling = debug_backtrace()[1]['function'];
-        if($this->getAccess()->{$functionCalling}()->granted()){
-            if($_ENV == 'prod'){
-                try{
-                    if($function(...$args)) $this->setItIsSuccess('Action validée');
+    public function __call(string $name, array $arguments) {
+        if(method_exists($this,$name)){
+            if($this->getAccess()->{$name}()->granted()){
+                if($_ENV == 'prod'){
+                    try{
+                        if($this->{$name}(...$arguments)) $this->setItIsSuccess('Action validée');
+                    }
+                    catch(\Error|\Exception $e){
+                        $this->rejectWithError($e);
+                    }
                 }
-                catch(\Error|\Exception $e){
-                    $this->rejectWithError($e);
+                else {
+                    if($this->{$name}(...$arguments)) $this->setItIsSuccess('Action validée');
                 }
             }
-            else {
-                if($function(...$args)) $this->setItIsSuccess('Action validée');
-            }
-
+            return $this->flush();
         }
-        return $this->flush();
+        else{
+            $this->rejectWithMessage("Erreur logicielle, merci de contacter l'administrateur.");
+            if($this->isDevEnv()) throw new \ErrorException("La fonction n'existe pas");
+        }
+        return $this;
     }
 
     protected function addOneMessage(string $message):void{

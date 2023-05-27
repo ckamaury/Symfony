@@ -5,32 +5,40 @@ namespace CkAmaury\Symfony;
 use CkAmaury\PhpDatetime\DateTime;
 use CkAmaury\Spreadsheet\File;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Mime\FileinfoMimeTypeGuesser;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class APP {
+
+    public static Kernel $kernel;
 
     public static bool $is_init = false;
     public static $user;
 
     private static ?string $dir = null;
 
-    public static function init(){
+    public static function init($env, $debug = false){
         if(self::$is_init == FALSE){
             setlocale(LC_TIME, "french");
             date_default_timezone_set( 'UTC');
             define('DB_TIME',(new DateTime())->getTimestamp());
+            Request::enableHttpMethodParameterOverride();
+
+            self::initializeKernel($env,$debug);
             self::$is_init = TRUE;
         }
+
     }
-    public static function initWithKernel($kernel){
-        self::init();
-        $GLOBALS['kernel'] = $kernel;
-        $kernel->boot();
+
+    private static function initializeKernel($env, $debug):void{
+        self::$kernel = new Kernel($env,$debug);
+        self::$kernel->boot();
     }
+
 
     public static function getDB_Time():DateTime{
         return (new DateTime())->setTimestamp(DB_TIME);
@@ -67,39 +75,32 @@ class APP {
     }
 
 
-    public static function getKernel(){
-        global $kernel;
-        if ( 'AppCache' == get_class($kernel) ) {
-            $kernel = $kernel->getKernel();
-        }
-        return $kernel;
+    public static function getKernel():Kernel{
+        return self::$kernel;
     }
-
+    public static function getContainer():ContainerInterface{
+        return self::getKernel()->getContainer();
+    }
     public static function getRouter(){
         return self::getContainer()->get('router');
     }
-
     public static function getManager($base = null): EntityManager{
-        if(is_null($base)){
+        /*if(is_null($base)){
             return self::getContainer()->get('doctrine.orm.entity_manager');
         }
         else{
             return self::getContainer()->get('doctrine')->getManager($base);
-        }
+        }*/
+        return self::getContainer()->get('doctrine')->getManager($base);
     }
-
-    public static function getContainer(){
-        return self::getKernel()->getContainer();
-    }
-
     public static function getRepository(string $class){
         return self::getManager()->getRepository($class);
     }
 
+
     public static function isManagerOpened():bool{
         return self::getManager()->isOpen();
     }
-
     public static function resetManager():bool{
         if (!self::isManagerOpened()) {
             self::getContainer()->get('doctrine')->resetManager();

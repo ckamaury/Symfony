@@ -22,7 +22,7 @@ class APP {
 
     private static ?string $dir = null;
 
-    public static function init(BaseKernel $kernel){
+    public static function initialize(BaseKernel $kernel):BaseKernel{
         if(self::$is_init == FALSE){
             setlocale(LC_TIME, "french");
             date_default_timezone_set( 'UTC');
@@ -32,7 +32,7 @@ class APP {
             self::initializeKernel($kernel);
             self::$is_init = TRUE;
         }
-
+        return self::$kernel;
     }
 
     private static function initializeKernel(BaseKernel $kernel):void{
@@ -76,7 +76,7 @@ class APP {
     }
 
 
-    public static function getKernel():Kernel{
+    public static function getKernel():BaseKernel{
         return self::$kernel;
     }
     public static function getContainer():ContainerInterface{

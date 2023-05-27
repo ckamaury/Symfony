@@ -9,33 +9,34 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Mime\FileinfoMimeTypeGuesser;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class APP {
 
-    public static Kernel $kernel;
+    public static BaseKernel $kernel;
 
     public static bool $is_init = false;
     public static $user;
 
     private static ?string $dir = null;
 
-    public static function init($env, $debug = false){
+    public static function init(BaseKernel $kernel){
         if(self::$is_init == FALSE){
             setlocale(LC_TIME, "french");
             date_default_timezone_set( 'UTC');
             define('DB_TIME',(new DateTime())->getTimestamp());
             Request::enableHttpMethodParameterOverride();
 
-            self::initializeKernel($env,$debug);
+            self::initializeKernel($kernel);
             self::$is_init = TRUE;
         }
 
     }
 
-    private static function initializeKernel($env, $debug):void{
-        self::$kernel = new Kernel($env,$debug);
+    private static function initializeKernel(BaseKernel $kernel):void{
+        self::$kernel = $kernel;
         self::$kernel->boot();
     }
 

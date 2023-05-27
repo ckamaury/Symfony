@@ -4,7 +4,6 @@ namespace CkAmaury\Symfony;
 
 use CkAmaury\PhpDatetime\DateTime;
 use CkAmaury\Spreadsheet\File;
-use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,7 +84,7 @@ class APP {
     public static function getRouter(){
         return self::getContainer()->get('router');
     }
-    public static function getManager($base = null): EntityManager{
+    public static function getManager($base = null){
         /*if(is_null($base)){
             return self::getContainer()->get('doctrine.orm.entity_manager');
         }

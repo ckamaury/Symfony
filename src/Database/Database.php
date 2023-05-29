@@ -12,20 +12,27 @@ class Database {
     public static function getContainer(){
         return APP::getKernel()->getContainer();
     }
+    public static function getDoctrine(){
+        return self::getContainer()->get('doctrine');
+    }
     public static function getManager($base = null): EntityManager{
-        if(is_null($base)){
-            return self::getContainer()->get('doctrine.orm.entity_manager');
+        return self::getDoctrine()->getManager($base);
+    }
+    public static function getRepository(string $class){
+        return self::getManager()->getRepository($class);
+    }
+    public static function resetManager():bool{
+        if (!self::getManager()->isOpen()) {
+            self::getDoctrine()->resetManager();
         }
-        else{
-            return self::getContainer()->get('doctrine')->getManager($base);
-        }
+        return self::getManager()->isOpen();
     }
 
     public static function flush($entity = null):void{
         self::getManager()->flush($entity = null);
     }
     public static function clear($entityName = null):void{
-        APP::getManager()->clear($entityName = null);
+        self::getManager()->clear($entityName = null);
     }
     public static function persist($entity,bool $flush = false):void{
         self::getManager()->persist($entity);
@@ -40,7 +47,7 @@ class Database {
     }
 
     public static function execute(string $sql, array $parameters = array()):int{
-        $conn = APP::getManager()->getConnection();
+        $conn = self::getManager()->getConnection();
         $stmt = $conn->prepare($sql);
         return $stmt->executeStatement($parameters);
     }
@@ -49,8 +56,8 @@ class Database {
         $sql .= 'UPDATE '.$tableName.' set id = (@rn := @rn + 1) order by id;';
         return self::execute($sql);
     }
-    public static function forceId(string $class){
-        $metadata = APP::getManager()->getClassMetaData($class);
+    public static function forceId(string $class):void{
+        $metadata = self::getManager()->getClassMetaData($class);
         $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
         $metadata->setIdGenerator(new AssignedGenerator());
     }

@@ -87,29 +87,8 @@ class APP {
     public static function getRouter(){
         return self::getContainer()->get('router');
     }
-    public static function getManager($base = null){
-        /*if(is_null($base)){
-            return self::getContainer()->get('doctrine.orm.entity_manager');
-        }
-        else{
-            return self::getContainer()->get('doctrine')->getManager($base);
-        }*/
-        return self::getContainer()->get('doctrine')->getManager($base);
-    }
-    public static function getRepository(string $class){
-        return self::getManager()->getRepository($class);
-    }
 
 
-    public static function isManagerOpened():bool{
-        return self::getManager()->isOpen();
-    }
-    public static function resetManager():bool{
-        if (!self::isManagerOpened()) {
-            self::getContainer()->get('doctrine')->resetManager();
-        }
-        return self::getManager()->isOpen();
-    }
 
     public static function getReference($p_Class,$p_ID) {
         return self::getManager()->getReference($p_Class,$p_ID);

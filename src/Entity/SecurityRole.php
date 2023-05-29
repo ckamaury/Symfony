@@ -2,7 +2,7 @@
 
 namespace CkAmaury\Symfony\Entity;
 
-use CkAmaury\Symfony\APP;
+use CkAmaury\Symfony\Database\Database;
 use CkAmaury\Symfony\Database\Entity;
 use CkAmaury\Symfony\Repository\SecurityRoleRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -41,7 +41,7 @@ class SecurityRole extends Entity {
         return $this->accesses;
     }
     public function loadAccesses():self{
-        $this->accesses = APP::getRepository(SecurityAccess::class)->getAllByRole($this);
+        $this->accesses = Database::getRepository(SecurityAccess::class)->getAllByRole($this);
         return $this;
     }
     public function hasAccess(string|SecurityAccess $right):bool{

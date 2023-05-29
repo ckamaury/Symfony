@@ -13,34 +13,21 @@ class DateTimeType extends \Doctrine\DBAL\Types\DateTimeType {
     public function getName():string{
         return Types::DATETIME_MUTABLE;
     }
-    public function getSQLDeclaration(array $fieldDeclaration, AbstractPlatform $platform):string{
-        return $platform->getDateTimeTypeDeclarationSQL($fieldDeclaration);
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform):string{
+        return $platform->getDateTimeTypeDeclarationSQL($column);
     }
-    public function convertToDatabaseValue($value, AbstractPlatform $platform):mixed
-    {
-        if ($value === null) {
-            return $value;
-        }
-
-        if ($value instanceof DateTimeInterface) {
+    public function convertToDatabaseValue($value, AbstractPlatform $platform):mixed {
+        if(is_null($value)) return null;
+        elseif ($value instanceof DateTimeInterface) {
             return $value->format($platform->getDateTimeFormatString());
         }
-
         throw ConversionException::conversionFailedInvalidType($value, $this->getName(), ['null', 'DateTime']);
     }
-    public function convertToPHPValue($value, AbstractPlatform $platform):mixed
-    {
-        if ($value === null || $value instanceof DateTimeInterface) {
+    public function convertToPHPValue($value, AbstractPlatform $platform): null|DateTimeInterface|DateTime {
+        if (is_null($value) || $value instanceof DateTimeInterface) {
             return $value;
         }
-
-        $val = new DateTime($value);
-
-        if (! $val) {
-            throw ConversionException::conversionFailedFormat($value, $this->getName(), $platform->getDateTimeFormatString());
-        }
-
-        return $val;
+        return new DateTime($value);
     }
 
 }

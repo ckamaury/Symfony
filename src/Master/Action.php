@@ -5,6 +5,9 @@ namespace CkAmaury\Symfony\Master;
 use CkAmaury\Symfony\APP;
 use CkAmaury\Symfony\Controller\Controller;
 use CkAmaury\Symfony\Database\Database;
+use Error;
+use ErrorException;
+use Exception;
 
 abstract class Action {
 
@@ -32,7 +35,7 @@ abstract class Action {
                             $this->flush();
                         }
                     }
-                    catch(\Error|\Exception $e){
+                    catch(Error|Exception $e){
                         $this->rejectWithError($e);
                     }
                 }
@@ -53,7 +56,7 @@ abstract class Action {
         }
         else{
             $this->rejectWithMessage("Erreur logicielle, merci de contacter l'administrateur.");
-            if($this->isDevEnv()) throw new \ErrorException("La fonction n'existe pas");
+            if($this->isDevEnv()) throw new ErrorException("La fonction n'existe pas");
         }
         return $this;
     }
@@ -70,15 +73,15 @@ abstract class Action {
             try{
                 Database::flush();
             }
-            catch(\Error|\Exception $e){
+            catch(Error|Exception $e){
                 $this->rejectWithError($e);
             }
         }
         return $this->setItIsFinished()->destroyAccess();
     }
-    protected function rejectWithError(\Error|\Exception $error):void{
+    protected function rejectWithError(Error|Exception $error):void{
         $this->rejectWithMessage("Erreur logicielle, merci de contacter l'administrateur.");
-        if($this->isDevEnv()) throw new \ErrorException($error->getMessage());
+        if($this->isDevEnv()) throw new ErrorException($error->getMessage());
     }
     protected function isDevEnv():bool{
         return APP::getKernel()->getEnvironment() === 'dev';

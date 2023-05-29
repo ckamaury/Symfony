@@ -90,11 +90,9 @@ class APP {
 
 
 
-    public static function getReference($p_Class,$p_ID) {
-        return self::getManager()->getReference($p_Class,$p_ID);
-    }
 
-    public static function download(File $file,?bool $deleteAfterSend = false){
+
+    public static function download(File $file,?bool $deleteAfterSend = false):BinaryFileResponse{
         $mimeTypeGuesser = new FileinfoMimeTypeGuesser();
         $mimeType = ($mimeTypeGuesser->isGuesserSupported()) ? $mimeTypeGuesser->guessMimeType($file->getPath()) : 'text/plain';
 
@@ -107,7 +105,7 @@ class APP {
         return $response->deleteFileAfterSend($deleteAfterSend);
     }
 
-    public static function getJsonResponse($p_Connected,$p_Authorized,$p_Error,$p_Values){
+    public static function getJsonResponse($p_Connected,$p_Authorized,$p_Error,$p_Values):array{
         return array(
             'connected'     => $p_Connected,
             'authorized'    => $p_Authorized,
@@ -118,7 +116,7 @@ class APP {
 
     public static function transformDBResult($p_Array,$p_Index,$p_Index2 = null){
         $array = array();
-        foreach($p_Array as $k => $v){
+        foreach($p_Array as $v){
             if(is_null($p_Index2)){
                 $array[$v->{$p_Index}()] = $v;
             }

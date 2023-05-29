@@ -23,7 +23,7 @@ abstract class Controller extends AbstractController {
         return $this->isCsrfTokenValid($name, $this->request->request->get('_token'));
     }
 
-    protected function setRequest(Request $request){
+    protected function setRequest(Request $request):void{
         $this->request = $request;
     }
     public function getRequest():Request{

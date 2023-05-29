@@ -2,7 +2,6 @@
 
 namespace CkAmaury\Symfony\UseCase\Security;
 
-use CkAmaury\Symfony\APP;
 use CkAmaury\Symfony\Database\Database;
 use CkAmaury\Symfony\Entity\SecurityAccess;
 use CkAmaury\Symfony\Entity\SecurityRole;
@@ -10,25 +9,25 @@ use CkAmaury\Symfony\Entity\SecurityRoleAccess;
 
 class ModifyRoleAccess {
 
-    public function __construct(private SecurityRole $role){}
+    public function __construct(private readonly SecurityRole $role){}
 
-    public function execute(array $accessList){
+    public function execute(array $accessList):void{
         $this->deleteAllAccess();
-        APP::getRepository(SecurityAccess::class)->findAll();
+        Database::getRepository(SecurityAccess::class)->findAll();
         foreach($accessList as $accessId => $authorized){
             if($authorized){
-                $access = APP::getRepository(SecurityAccess::class)->find($accessId);
+                $access = Database::getRepository(SecurityAccess::class)->find($accessId);
                 (new SecurityRoleAccess())
                     ->setRole($this->role)
                     ->setAccess($access)
-                    ->save();
+                    ->persist();
             }
         }
         Database::flush();
     }
 
     private function deleteAllAccess():void{
-        APP::getRepository(SecurityRoleAccess::class)->deleteAllAccessForRole($this->role);
+        Database::getRepository(SecurityRoleAccess::class)->deleteAllAccessForRole($this->role);
     }
 
 }

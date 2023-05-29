@@ -3,6 +3,7 @@
 namespace CkAmaury\Symfony\Repository;
 
 use CkAmaury\Symfony\APP;
+use CkAmaury\Symfony\Database\Database;
 use CkAmaury\Symfony\Entity\SecurityAccess;
 use CkAmaury\Symfony\Entity\SecurityRole;
 use CkAmaury\Symfony\Entity\SecurityRoleAccess;
@@ -32,7 +33,7 @@ class SecurityAccessRepository extends RepositoryMiniTable {
         return $this->values;
     }
 
-    public function orderByFullName(array &$list){
+    public function orderByFullName(array &$list):void{
         usort($list, function(SecurityAccess $a, SecurityAccess $b) {
             return strcmp($a->getFullName(), $b->getFullName());
         });
@@ -42,7 +43,7 @@ class SecurityAccessRepository extends RepositoryMiniTable {
     /** @return SecurityAccess[] */
     public function getAllByRole(SecurityRole $role):array{
 
-        $sub_query = APP::getRepository(SecurityRoleAccess::class)->getDQL_AllByRole($role);
+        $sub_query = Database::getRepository(SecurityRoleAccess::class)->getDQL_AllByRole($role);
 
         return $this->createQueryBuilder('security_access')
             ->where('security_access.id IN ('.$sub_query.')')
@@ -59,7 +60,7 @@ class SecurityAccessRepository extends RepositoryMiniTable {
 
         if(empty($roles)) return [];
 
-        $sub_query = APP::getRepository(SecurityRoleAccess::class)->getDQL_AllByRoles($roles);
+        $sub_query = Database::getRepository(SecurityRoleAccess::class)->getDQL_AllByRoles($roles);
 
         return $this->createQueryBuilder('security_access')
             ->where('security_access.id IN ('.$sub_query.')')

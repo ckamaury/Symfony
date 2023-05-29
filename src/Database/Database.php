@@ -6,6 +6,7 @@ use CkAmaury\Symfony\APP;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Id\AssignedGenerator;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 
 class Database {
 
@@ -21,6 +22,9 @@ class Database {
     public static function getRepository(string $class){
         return self::getManager()->getRepository($class);
     }
+    public static function getReference($entityName, $id) {
+        return self::getManager()->getReference($entityName, $id);
+    }
     public static function resetManager():bool{
         if (!self::getManager()->isOpen()) {
             self::getDoctrine()->resetManager();
@@ -29,10 +33,10 @@ class Database {
     }
 
     public static function flush($entity = null):void{
-        self::getManager()->flush($entity = null);
+        self::getManager()->flush($entity);
     }
     public static function clear($entityName = null):void{
-        self::getManager()->clear($entityName = null);
+        self::getManager()->clear($entityName);
     }
     public static function persist($entity,bool $flush = false):void{
         self::getManager()->persist($entity);
@@ -58,7 +62,7 @@ class Database {
     }
     public static function forceId(string $class):void{
         $metadata = self::getManager()->getClassMetaData($class);
-        $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
+        $metadata->setIdGeneratorType(ClassMetadataInfo::GENERATOR_TYPE_NONE);
         $metadata->setIdGenerator(new AssignedGenerator());
     }
 

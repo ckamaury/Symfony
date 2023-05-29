@@ -2,9 +2,11 @@
 
 namespace CkAmaury\Symfony\Collection;
 
+use JetBrains\PhpStorm\NoReturn;
+
 class Collection  {
 
-    private $array = array();
+    private array $array = array();
     private $NULL = null;
 
     public function setArray($array){
@@ -24,7 +26,8 @@ class Collection  {
         return $this;
     }
 
-    public function dump() {
+    #[NoReturn]
+    public function dump():void{
         dd($this->array);
     }
 

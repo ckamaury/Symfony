@@ -2,7 +2,7 @@
 
 namespace CkAmaury\Symfony\Master;
 
-use CkAmaury\Symfony\APP;
+use CkAmaury\Symfony\Database\Database;
 use CkAmaury\Symfony\Entity\SecurityAccess;
 use CkAmaury\Symfony\Entity\SecurityRole;
 
@@ -17,14 +17,14 @@ abstract class UserSecurityMaster {
     abstract protected function importRolesOfUser();
 
     protected function initialize():void{
-        APP::getRepository(SecurityAccess::class)->findAll();
-        APP::getRepository(SecurityRole::class)->findAll();
+        Database::getRepository(SecurityAccess::class)->findAll();
+        Database::getRepository(SecurityRole::class)->findAll();
         $this->importRolesOfUser();
         $this->loadSecurityAccesses();
     }
 
     private function loadSecurityAccesses():self{
-        $this->securityAccesses = APP::getRepository(SecurityAccess::class)->getAllByRoles($this->getSecurityRoles());
+        $this->securityAccesses = Database::getRepository(SecurityAccess::class)->getAllByRoles($this->getSecurityRoles());
         return $this;
     }
 

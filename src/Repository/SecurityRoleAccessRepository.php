@@ -23,8 +23,8 @@ class SecurityRoleAccessRepository extends RepositoryMiniTable {
 
     public function getDQL_AllByRole(SecurityRole $role) : string{
         return  $this->createQueryBuilder('role_right_access')
-            ->select('IDENTITY(role_right_access.fk_access)')
-            ->where('role_right_access.fk_role = '.$role->getId())
+            ->select('IDENTITY(role_right_access.access)')
+            ->where('role_right_access.role = '.$role->getId())
             ->getDQL();
     }
 
@@ -37,22 +37,22 @@ class SecurityRoleAccessRepository extends RepositoryMiniTable {
         }
 
         return  $this->createQueryBuilder('role_right_access')
-            ->select('IDENTITY(role_right_access.fk_access)')
-            ->where('role_right_access.fk_role IN ('.implode(",", $ids).')')
+            ->select('IDENTITY(role_right_access.access)')
+            ->where('role_right_access.role IN ('.implode(",", $ids).')')
             ->getDQL();
     }
 
     public function getDQL_AllRoleByAccess(SecurityAccess $access) : string{
         return  $this->createQueryBuilder('roleAccess')
-            ->select('IDENTITY(roleAccess.fk_role)')
-            ->where('roleAccess.fk_access = '.$access->getId())
+            ->select('IDENTITY(roleAccess.role)')
+            ->where('roleAccess.access = '.$access->getId())
             ->getDQL();
     }
 
     public function deleteAllAccessForRole(SecurityRole $role):int{
         return $this->_em->createQueryBuilder()
             ->delete(SecurityRoleAccess::class,'roleAccess')
-            ->where('roleAccess.fk_role = :role')
+            ->where('roleAccess.role = :role')
             ->setParameter('role', $role->getId())
             ->getQuery()
             ->execute();
@@ -60,8 +60,8 @@ class SecurityRoleAccessRepository extends RepositoryMiniTable {
 
     public function countRoleByAccess(SecurityAccess $access) : int {
         return $this->createQueryBuilder('roleAccess')
-            ->select('count(roleAccess.fk_role)')
-            ->where('roleAccess.fk_access = :access')
+            ->select('count(roleAccess.role)')
+            ->where('roleAccess.access = :access')
             ->setParameter('access',$access)
             ->getQuery()
             ->getSingleScalarResult();

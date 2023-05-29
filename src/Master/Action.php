@@ -26,7 +26,8 @@ abstract class Action {
             if($this->getAccess()->{$name}()->granted()){
                 if($this->isProdEnv()){
                     try{
-                        if($this->{$name}(...$arguments)) {
+                        $this->{$name}(...$arguments);
+                        if($this->isSuccess) {
                             $this->setItIsSuccess('Action validée');
                             $this->flush();
                         }
@@ -36,7 +37,8 @@ abstract class Action {
                     }
                 }
                 else {
-                    if($this->{$name}(...$arguments)) {
+                    $this->{$name}(...$arguments);
+                    if($this->isSuccess) {
                         $this->setItIsSuccess('Action validée');
                         $this->flush();
                     }

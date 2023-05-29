@@ -2,9 +2,8 @@
 
 namespace CkAmaury\Symfony\Master;
 
-abstract class Master {
+interface Master {
 
-    abstract protected function getActions();
-    abstract protected function getAccesses();
-
+    function getAccess();
+    function getAction();
 }

@@ -19,8 +19,8 @@ class ModifyRoleAccess {
             if($authorized){
                 $access = APP::getRepository(SecurityAccess::class)->find($accessId);
                 (new SecurityRoleAccess())
-                    ->setFkRole($this->role)
-                    ->setFkAccess($access)
+                    ->setRole($this->role)
+                    ->setAccess($access)
                     ->save();
             }
         }

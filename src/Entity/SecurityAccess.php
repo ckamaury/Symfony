@@ -2,33 +2,28 @@
 
 namespace CkAmaury\Symfony\Entity;
 
-use CkAmaury\Symfony\Database\DB_EntityWithID;
+use CkAmaury\Symfony\Database\Entity;
 use CkAmaury\Symfony\Repository\SecurityAccessRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=SecurityAccessRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
-class SecurityAccess extends DB_EntityWithID {
+#[ORM\Entity(repositoryClass: SecurityAccessRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+class SecurityAccess extends Entity {
 
-    /**
-     * @ORM\ManyToOne(targetEntity=SecurityAccess::class)
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private ?self $fk_parent;
+    #[ORM\ManyToOne(targetEntity: SecurityAccess::class)]
+    private ?self $parent;
 
-    /** @ORM\Column(type="string", length=100) */
+    #[ORM\Column]
     private string $name;
 
-    /** @ORM\Column(type="string", length=255) */
+    #[ORM\Column]
     private string $description;
 
-    public function getFkParent(): ?self {
-        return $this->fk_parent;
+    public function getParent(): ?self {
+        return $this->parent;
     }
-    public function setFkParent(?self $fk_parent): self {
-        $this->fk_parent = $fk_parent;
+    public function setParent(?self $parent): self {
+        $this->parent = $parent;
         return $this;
     }
 
@@ -49,14 +44,14 @@ class SecurityAccess extends DB_EntityWithID {
     }
 
     public function getFullName():string{
-        if(!is_null($this->getFkParent())){
-            return implode('_',[$this->getFkParent()->getFullName(),$this->getName()]);
+        if(!is_null($this->getParent())){
+            return implode('_',[$this->getParent()->getFullName(),$this->getName()]);
         }
         return $this->getName();
     }
     public function getFormName():string{
-        if(!is_null($this->getFkParent())){
-            return implode(' > ',[$this->getFkParent()->getFullName(),$this->getName()]);
+        if(!is_null($this->getParent())){
+            return implode(' > ',[$this->getParent()->getFullName(),$this->getName()]);
         }
         return $this->getName();
     }
@@ -64,14 +59,11 @@ class SecurityAccess extends DB_EntityWithID {
     public function getLevel():int{
         $access = $this;
         $level = 0;
-        while(!is_null($access->getFkParent())){
+        while(!is_null($access->getParent())){
             $level++;
-            $access = $access->getFkParent();
+            $access = $access->getParent();
         }
         return $level;
     }
-    /*public function countRoles():int{
-        return Repository::SecurityRoleAccess()->countRoleByAccess($this);
-    }*/
 
 }

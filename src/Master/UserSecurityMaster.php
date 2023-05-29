@@ -55,7 +55,7 @@ abstract class UserSecurityMaster {
     public function countPrimaryAccess():int{
         $count = 0;
         foreach($this->getSecurityAccesses() as $access){
-            if(is_null($access->getFkParent())) $count++;
+            if(is_null($access->getParent())) $count++;
         }
         return $count;
     }

@@ -4,6 +4,8 @@ namespace CkAmaury\Symfony\Database;
 
 use CkAmaury\Symfony\APP;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Id\AssignedGenerator;
+use Doctrine\ORM\Mapping\ClassMetadata;
 
 class Database {
 
@@ -46,6 +48,11 @@ class Database {
         $sql = 'set @rn := 0;';
         $sql .= 'UPDATE '.$tableName.' set id = (@rn := @rn + 1) order by id;';
         return self::execute($sql);
+    }
+    public static function forceId(string $class){
+        $metadata = APP::getManager()->getClassMetaData($class);
+        $metadata->setIdGeneratorType(ClassMetadata::GENERATOR_TYPE_NONE);
+        $metadata->setIdGenerator(new AssignedGenerator());
     }
 
 }

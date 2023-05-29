@@ -3,20 +3,18 @@
 namespace CkAmaury\Symfony\Entity;
 
 use CkAmaury\Symfony\APP;
-use CkAmaury\Symfony\Database\DB_EntityWithID;
+use CkAmaury\Symfony\Database\Entity;
 use CkAmaury\Symfony\Repository\SecurityRoleRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=SecurityRoleRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
-class SecurityRole extends DB_EntityWithID {
+#[ORM\Entity(repositoryClass: SecurityRoleRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+class SecurityRole extends Entity {
 
-    /** @ORM\Column(type="string", length=50) */
+    #[ORM\Column]
     private string $name;
 
-    /** @ORM\Column(type="string", length=255) */
+    #[ORM\Column]
     private string $description;
 
     /** @var SecurityAccess[] */

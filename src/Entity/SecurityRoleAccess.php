@@ -2,43 +2,33 @@
 
 namespace CkAmaury\Symfony\Entity;
 
-use CkAmaury\Symfony\Database\DB_Timed;
+use CkAmaury\Symfony\Database\EntityTimed;
 use CkAmaury\Symfony\Repository\SecurityRoleAccessRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=SecurityRoleAccessRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
-class SecurityRoleAccess extends DB_Timed {
+#[ORM\Entity(repositoryClass: SecurityRoleAccessRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+class SecurityRoleAccess extends EntityTimed {
 
-    /**
-     * @ORM\ManyToOne(targetEntity=SecurityRole::class)
-     * @ORM\JoinColumn(nullable=false)
-     * @ORM\Id
-     */
-    private SecurityRole $fk_role;
+    #[ORM\ManyToOne(targetEntity: SecurityRole::class)]
+    private SecurityRole $role;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=SecurityAccess::class)
-     * @ORM\JoinColumn(nullable=false)
-     * @ORM\Id
-     */
-    private SecurityAccess $fk_access;
+    #[ORM\ManyToOne(targetEntity: SecurityAccess::class)]
+    private SecurityAccess $access;
 
-    public function getFkRole(): SecurityRole {
-        return $this->fk_role;
+    public function getRole(): SecurityRole {
+        return $this->role;
     }
-    public function setFkRole(SecurityRole $fk_role): self {
-        $this->fk_role = $fk_role;
+    public function setRole(SecurityRole $role): self {
+        $this->role = $role;
         return $this;
     }
 
-    public function getFkAccess(): SecurityAccess {
-        return $this->fk_access;
+    public function getAccess(): SecurityAccess {
+        return $this->access;
     }
-    public function setFkAccess(SecurityAccess $fk_access): self {
-        $this->fk_access = $fk_access;
+    public function setAccess(SecurityAccess $access): self {
+        $this->access = $access;
         return $this;
     }
 

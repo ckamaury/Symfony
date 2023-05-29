@@ -4,6 +4,8 @@ namespace CkAmaury\Symfony;
 
 use CkAmaury\PhpDatetime\DateTime;
 use CkAmaury\Spreadsheet\File;
+use CkAmaury\Symfony\Console\Console;
+use CkAmaury\Symfony\Memory\Memory;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -33,6 +35,8 @@ class APP {
             self::initializeKernel($kernel);
             self::$outputConsole = $output;
             self::$isInitialized = TRUE;
+            Console::write('APP IS INITIALIZED');
+            Console::write('MEMORY LIMIT : '.Memory::getMemoryLimit());
         }
         return self::$kernel;
     }

@@ -12,7 +12,7 @@ class Memory {
         return self::transformBytesInString(memory_get_peak_usage());
     }
     public static function getMemoryLimit():string{
-        return self::transformBytesInString(ini_get('memory_limit'));
+        return ini_get('memory_limit');
     }
 
     public static function transformBytesInString(int $bytes):string{

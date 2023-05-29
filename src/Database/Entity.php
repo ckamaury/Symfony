@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\HasLifecycleCallbacks]
 #[ORM\MappedSuperclass]
-class Entity {
+abstract class Entity {
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

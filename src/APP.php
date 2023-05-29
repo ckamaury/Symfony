@@ -4,6 +4,7 @@ namespace CkAmaury\Symfony;
 
 use CkAmaury\PhpDatetime\DateTime;
 use CkAmaury\Spreadsheet\File;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,22 +15,24 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class APP {
 
-    public static BaseKernel $kernel;
+    private static BaseKernel $kernel;
+    private static ?OutputInterface $outputConsole;
 
-    public static bool $is_init = false;
+    public static bool $isInitialized = false;
     public static $user;
 
     private static ?string $dir = null;
 
-    public static function initialize(BaseKernel $kernel):BaseKernel{
-        if(self::$is_init == FALSE){
+    public static function initialize(BaseKernel $kernel,?OutputInterface $output = null):BaseKernel{
+        if(!self::$isInitialized){
             setlocale(LC_TIME, "french");
             date_default_timezone_set( 'UTC');
             define('DB_TIME',(new DateTime())->getTimestamp());
             Request::enableHttpMethodParameterOverride();
 
             self::initializeKernel($kernel);
-            self::$is_init = TRUE;
+            self::$outputConsole = $output;
+            self::$isInitialized = TRUE;
         }
         return self::$kernel;
     }
@@ -166,5 +169,8 @@ class APP {
     }
 
 
+    public static function getOutputConsole():?OutputInterface{
+        return static::$outputConsole;
+    }
 }
 

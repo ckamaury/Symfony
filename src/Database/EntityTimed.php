@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\HasLifecycleCallbacks]
 #[ORM\MappedSuperclass]
-class EntityTimed extends Entity {
+abstract class EntityTimed extends Entity {
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     protected ?DateTime $ins_at = null;

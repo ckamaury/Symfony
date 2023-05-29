@@ -1,13 +1,12 @@
 <?php
 
-namespace CkAmaury\Symfony\Type;
+namespace CkAmaury\Symfony\Database\Type;
 
 use CkAmaury\PhpDatetime\DateTime;
 use DateTimeInterface;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;
 use Doctrine\DBAL\Types\Types;
-
 
 class DateTimeType extends \Doctrine\DBAL\Types\DateTimeType {
 

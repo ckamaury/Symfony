@@ -44,6 +44,12 @@ abstract class Action {
                     }
                 }
             }
+            else{
+                foreach($this->getAccess()->getMessages() as $message){
+                    $this->rejectWithMessage($message);
+                }
+
+            }
         }
         else{
             $this->rejectWithMessage("Erreur logicielle, merci de contacter l'administrateur.");

@@ -17,6 +17,7 @@
         "ext-json": "*",
         "ext-pdo": "*",
         "symfony/apache-pack": "^1.0",
+        "beberlei/doctrineextensions": "^1.3",
         "ckamaury/phpmagicfunctions": "^1.0",
         "ckamaury/phpdatetime": "^1.0",
         "ckamaury/spreadsheet": "^1.0",

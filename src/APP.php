@@ -31,9 +31,8 @@ class APP {
             date_default_timezone_set( 'UTC');
             define('DB_TIME',(new DateTime())->getTimestamp());
 
-            if(!is_null($kernel)) self::initializeKernel($kernel);
-
             self::$outputConsole = $output;
+            if(!is_null($kernel)) self::initializeKernel($kernel);
             self::$isInitialized = TRUE;
             Console::write('APP IS INITIALIZED');
             Console::write('MEMORY LIMIT : '.Memory::getMemoryLimit());

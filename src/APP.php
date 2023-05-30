@@ -25,7 +25,7 @@ class APP {
 
     private static ?string $dir = null;
 
-    public static function initialize(?BaseKernel $kernel = null,?OutputInterface $output = null):BaseKernel{
+    public static function initialize(?BaseKernel $kernel = null,?OutputInterface $output = null):?BaseKernel{
         if(!self::$isInitialized){
             setlocale(LC_TIME, "french");
             date_default_timezone_set( 'UTC');
@@ -38,7 +38,7 @@ class APP {
             Console::write('APP IS INITIALIZED');
             Console::write('MEMORY LIMIT : '.Memory::getMemoryLimit());
         }
-        return self::$kernel;
+        return $kernel;
     }
 
     public static function initializeKernel(BaseKernel $kernel):void{

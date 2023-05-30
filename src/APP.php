@@ -25,14 +25,14 @@ class APP {
 
     private static ?string $dir = null;
 
-    public static function initialize(BaseKernel $kernel,?OutputInterface $output = null):BaseKernel{
+    public static function initialize(?BaseKernel $kernel = null,?OutputInterface $output = null):BaseKernel{
         if(!self::$isInitialized){
             setlocale(LC_TIME, "french");
             date_default_timezone_set( 'UTC');
             define('DB_TIME',(new DateTime())->getTimestamp());
-            Request::enableHttpMethodParameterOverride();
 
-            self::initializeKernel($kernel);
+            if(!is_null($kernel)) self::initializeKernel($kernel);
+
             self::$outputConsole = $output;
             self::$isInitialized = TRUE;
             Console::write('APP IS INITIALIZED');
@@ -41,9 +41,11 @@ class APP {
         return self::$kernel;
     }
 
-    private static function initializeKernel(BaseKernel $kernel):void{
+    public static function initializeKernel(BaseKernel $kernel):void{
+        Request::enableHttpMethodParameterOverride();
         self::$kernel = $kernel;
         self::$kernel->boot();
+        Console::write('KERNEL IS INITIALIZED');
     }
 
 

@@ -432,7 +432,7 @@ class DateTime extends \DateTime {
         return $locale_vars;
     }
     public function eraseTime(): self{
-        $this->setTime(0,0,0);
+        $this->setTime(0,0);
         return $this;
     }
     public function getMicroTimestamp(): int{

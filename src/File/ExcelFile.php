@@ -66,10 +66,8 @@ class ExcelFile extends File {
     }
 
     private function createSheetIfNotExist(string $search_sheetname) : Worksheet{
-        foreach($this->spreadsheet->getSheetNames() as $sheetName){
-            if($search_sheetname == $sheetName){
-                return $this->spreadsheet->getSheetByName($search_sheetname);
-            }
+        if (in_array($search_sheetname, $this->spreadsheet->getSheetNames())) {
+            return $this->spreadsheet->getSheetByName($search_sheetname);
         }
         return $this->createSheet($search_sheetname);
     }
@@ -98,13 +96,13 @@ class ExcelFile extends File {
         $headers = $this->extractHeaders($values);
         $row_index = 1;
         foreach($headers as $column_index => $header){
-            $sheet->getCellByColumnAndRow($column_index, $row_index)->setValue(strtoupper($header));
+            $sheet->getCell([$column_index, $row_index])->setValue(strtoupper($header));
         }
         $row_index++;
         foreach($values as $row){
             foreach($headers as $column_index => $header){
                 if(isset($row[$header])){
-                    $sheet->getCellByColumnAndRow($column_index, $row_index)->setValue($row[$header]);
+                    $sheet->getCell([$column_index, $row_index])->setValue($row[$header]);
                 }
             }
             $row_index++;

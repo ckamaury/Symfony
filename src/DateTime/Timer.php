@@ -24,7 +24,6 @@ class Timer{
     public function clean(): void{
         $this->start = null;
         $this->steps = array();
-        $this->end = null;
     }
 
     private function addEntry():void{

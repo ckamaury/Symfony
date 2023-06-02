@@ -2,6 +2,8 @@
 
 namespace CkAmaury\Symfony\File;
 
+use Exception;
+
 class File {
 
     protected string $path;
@@ -121,7 +123,7 @@ class File {
         }
 
         if(!$this->putContents($contents)) {
-            throw new \Exception('Downloading is unsuccessful.');
+            throw new Exception('Downloading is unsuccessful.');
         }
     }
 

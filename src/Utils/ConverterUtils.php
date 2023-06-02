@@ -39,7 +39,7 @@ class ConverterUtils{
         return round($pounds * 0.45359237,$round);
     }
 
-    static function convertMachInknots(float $mach,int $round = 2){
+    static function convertMachInKnots(float $mach,int $round = 2){
         return round($mach * 600,$round);
     }
 }

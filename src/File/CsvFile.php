@@ -2,6 +2,8 @@
 
 namespace CkAmaury\Symfony\File;
 
+use Exception;
+
 class CsvFile extends File {
 
     protected int $row_current_number = 0;
@@ -63,7 +65,7 @@ class CsvFile extends File {
     }
     public function getRow(int $rowNumber){
         if($rowNumber < 1){
-            Throw New \Exception("Row Number must be >= 1");
+            throw New Exception("Row Number must be >= 1");
         }
 
         if($this->row_current_number >= $rowNumber){

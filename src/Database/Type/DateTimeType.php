@@ -2,7 +2,7 @@
 
 namespace CkAmaury\Symfony\Database\Type;
 
-use CkAmaury\PhpDatetime\DateTime;
+use CkAmaury\Symfony\DateTime\DateTime;
 use DateTimeInterface;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\ConversionException;

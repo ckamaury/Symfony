@@ -18,8 +18,6 @@
         "ext-pdo": "*",
         "ext-intl": "*",
         "beberlei/doctrineextensions": "^1.3",
-        "ckamaury/spreadsheet": "^1.0",
-        "ckamaury/phpcurl": "^1.0",
         "phpoffice/phpspreadsheet": "^1.28",
         "symfony/apache-pack": "^1.0",
         "symfony/webapp-pack": "^1.2"

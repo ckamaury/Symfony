@@ -5,7 +5,6 @@ namespace CkAmaury\Symfony\Database;
 use CkAmaury\Symfony\APP;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Id\AssignedGenerator;
-use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
 
 class Database {

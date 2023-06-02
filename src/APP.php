@@ -2,9 +2,9 @@
 
 namespace CkAmaury\Symfony;
 
-use CkAmaury\Spreadsheet\File;
 use CkAmaury\Symfony\Console\Console;
 use CkAmaury\Symfony\DateTime\DateTime;
+use CkAmaury\Symfony\File\File;
 use CkAmaury\Symfony\Memory\Memory;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;

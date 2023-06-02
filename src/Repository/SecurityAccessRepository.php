@@ -2,7 +2,6 @@
 
 namespace CkAmaury\Symfony\Repository;
 
-use CkAmaury\Symfony\APP;
 use CkAmaury\Symfony\Database\Database;
 use CkAmaury\Symfony\Entity\SecurityAccess;
 use CkAmaury\Symfony\Entity\SecurityRole;

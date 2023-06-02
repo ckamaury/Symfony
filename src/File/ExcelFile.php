@@ -87,7 +87,7 @@ class ExcelFile extends File {
 
         $i = 1;
         $formatted_headers = array();
-        foreach($headers as $key => $header){
+        foreach($headers as $header){
             $formatted_headers[$i++] = $header;
         }
         return $formatted_headers;

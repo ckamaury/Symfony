@@ -1,7 +1,8 @@
 <?php
+
 namespace CkAmaury\Symfony\Utils\Html;
 
-use CkAmaury\PhpMagicFunctions\ArrayUtils;
+use CkAmaury\Symfony\Utils\ArrayUtils;
 
 class FormAnalyzerHtmlUtils {
 
@@ -65,7 +66,7 @@ class FormAnalyzerHtmlUtils {
                 //TAGS INPUT
                 $text = $array[2][$key][0];
                 $text = $this->preg_match_array('/<input([^>]*)>/',$text);
-                foreach($text[1] as $key2 => $value2){
+                foreach($text[1] as $value2){
                     $last_value = preg_replace('/ /','',$value2[0]);
                     $form[$key]['INPUT_TAGS'][] = $this->valuesForm($this->preg_match_array('/([^=]*)="([^"]*)"/',$last_value));
                 }

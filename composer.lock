@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d76ae5727716618247666ac7fe32c6b",
+    "content-hash": "2582eaf0aa4b80a3b27eb01cb118f42b",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -62,130 +62,6 @@
                 "source": "https://github.com/beberlei/DoctrineExtensions/tree/v1.3.0"
             },
             "time": "2020-11-29T07:37:23+00:00"
-        },
-        {
-            "name": "ckamaury/phpcurl",
-            "version": "1.0.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ckamaury/PhpCurl.git",
-                "reference": "43ad31e63b8644d628a65d904a58850a39e34034"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ckamaury/PhpCurl/zipball/43ad31e63b8644d628a65d904a58850a39e34034",
-                "reference": "43ad31e63b8644d628a65d904a58850a39e34034",
-                "shasum": ""
-            },
-            "require": {
-                "ckamaury/phpmagicfunctions": "^1.0",
-                "ext-curl": "*",
-                "php": ">=8.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "CkAmaury\\PhpCurl\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Romain FRANCOIS"
-                }
-            ],
-            "description": "PHP Curl functions.",
-            "support": {
-                "issues": "https://github.com/ckamaury/PhpCurl/issues",
-                "source": "https://github.com/ckamaury/PhpCurl/tree/1.0.7"
-            },
-            "time": "2021-05-05T06:52:32+00:00"
-        },
-        {
-            "name": "ckamaury/phpmagicfunctions",
-            "version": "1.0.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ckamaury/PhpMagicFunctions.git",
-                "reference": "252bc7b94ba79249ab619b1ed6b2edbad7d0700d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ckamaury/PhpMagicFunctions/zipball/252bc7b94ba79249ab619b1ed6b2edbad7d0700d",
-                "reference": "252bc7b94ba79249ab619b1ed6b2edbad7d0700d",
-                "shasum": ""
-            },
-            "require": {
-                "ext-json": "*",
-                "php": ">=7.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "CkAmaury\\PhpMagicFunctions\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Romain FRANCOIS"
-                }
-            ],
-            "description": "PHP Magic Functions.",
-            "support": {
-                "issues": "https://github.com/ckamaury/PhpMagicFunctions/issues",
-                "source": "https://github.com/ckamaury/PhpMagicFunctions/tree/1.0.9"
-            },
-            "time": "2023-05-15T13:33:58+00:00"
-        },
-        {
-            "name": "ckamaury/spreadsheet",
-            "version": "1.0.8",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ckamaury/spreadsheet.git",
-                "reference": "f9fce2aeff10ecadb48a73e3433c0dfa38695f0e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ckamaury/spreadsheet/zipball/f9fce2aeff10ecadb48a73e3433c0dfa38695f0e",
-                "reference": "f9fce2aeff10ecadb48a73e3433c0dfa38695f0e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.4",
-                "phpoffice/phpspreadsheet": "^1.15"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^9.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "CkAmaury\\Spreadsheet\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Romain FRANCOIS"
-                }
-            ],
-            "description": "PHP spreadsheet facilitator for export in CSV / XLSX based on PHPOffice/PhpSpreadsheet",
-            "support": {
-                "issues": "https://github.com/ckamaury/spreadsheet/issues",
-                "source": "https://github.com/ckamaury/spreadsheet/tree/1.0.8"
-            },
-            "time": "2023-02-26T09:53:25+00:00"
         },
         {
             "name": "doctrine/annotations",

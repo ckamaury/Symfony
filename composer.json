@@ -16,6 +16,7 @@
         "ext-iconv": "*",
         "ext-json": "*",
         "ext-pdo": "*",
+        "ext-intl": "*",
         "symfony/apache-pack": "^1.0",
         "beberlei/doctrineextensions": "^1.3",
         "ckamaury/phpmagicfunctions": "^1.0",

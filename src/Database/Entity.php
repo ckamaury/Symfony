@@ -35,9 +35,11 @@ abstract class Entity {
 
     /* ===== DATABASE ===== */
     public function persist(bool $flush = false):static{
-        if(is_null($this->getId())){
-            Database::persist($this,$flush);
-        }
+        return $this->save($flush);
+    }
+    public function save(bool $flush = false):static{
+        if(is_null($this->getId())) Database::persist($this);
+        if($flush) Database::flush();
         return $this;
     }
     public function remove(bool $flush = false):static{

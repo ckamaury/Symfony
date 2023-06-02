@@ -54,9 +54,11 @@ abstract class EntityTimed extends Entity {
     }
 
     public function persist(bool $flush = false):static{
-        if(is_null($this->getInsAt())){
-            Database::persist($this,$flush);
-        }
+        return $this->save($flush);
+    }
+    public function save(bool $flush = false):static{
+        if(is_null($this->getInsAt())) Database::persist($this);
+        if($flush) Database::flush();
         return $this;
     }
 

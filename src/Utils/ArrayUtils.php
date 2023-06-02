@@ -89,7 +89,7 @@ class ArrayUtils {
         }
     }
 
-    static function switch_position_items(array &$array,$key_1,$key_2){
+    static function switchPositionItems(array &$array,$key_1,$key_2):void{
         [$array[$key_1], $array[$key_2]] = [$array[$key_2], $array[$key_1]];
     }
 }

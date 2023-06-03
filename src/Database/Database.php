@@ -65,4 +65,11 @@ class Database {
         $metadata->setIdGenerator(new AssignedGenerator());
     }
 
+    public static function transformArrayInString(array $values):string{
+        foreach($values as $key => $value){
+            if(is_string($value)) $values[$key] = "'$value'";
+        }
+        return implode(',',$values);
+    }
+
 }

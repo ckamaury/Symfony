@@ -26,11 +26,15 @@ abstract class Entity {
     }
 
     public function isSame($entity):bool{
-        return  get_class($this) == get_class($entity)
-            &&  $this->getId() == $entity->getId();
+        return is_object($entity)
+            && get_class($this) == get_class($entity)
+            && $this->isSameId($entity->getId());
     }
     public function isDifferent($entity):bool{
         return  !$this->isSame($entity);
+    }
+    public function isSameId(int $id):bool{
+        return $this->getId() == $id;
     }
 
     /* ===== DATABASE ===== */

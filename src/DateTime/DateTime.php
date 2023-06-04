@@ -33,10 +33,12 @@ class DateTime extends \DateTime {
 
     //######### YEARS #########
     public function addYears(int $year): self{
+        if($year < 0) return $this->subYears($year);
         $this->add($this->getYearInterval($year));
         return $this;
     }
     public function subYears(int $year): self{
+        if($year < 0) return $this->addYears($year);
         $this->sub($this->getYearInterval($year));
         return $this;
     }
@@ -61,10 +63,12 @@ class DateTime extends \DateTime {
 
     //######### MONTHS #########
     public function addMonths(int $month): self{
+        if($month < 0) return $this->subMonths($month);
         $this->add($this->getMonthInterval($month));
         return $this;
     }
     public function subMonths(int $month): self{
+        if($month < 0) return $this->addMonths($month);
         $this->sub($this->getMonthInterval($month));
         return $this;
     }
@@ -122,10 +126,12 @@ class DateTime extends \DateTime {
 
     //######### DAYS #########
     public function addDays(int $day): self{
+        if($day < 0) return $this->subDays($day);
         $this->add($this->getDayInterval($day));
         return $this;
     }
     public function subDays(int $day): self{
+        if($day < 0) return $this->addDays($day);
         $this->sub($this->getDayInterval($day));
         return $this;
     }
@@ -156,11 +162,13 @@ class DateTime extends \DateTime {
 
     //######### HOURS #########
     public function addHours(int $hour): self{
+        if($hour < 0) return $this->subHours($hour);
         $this->add($this->getHourInterval($hour));
         return $this;
     }
     public function subHours(int $hour): self{
         $this->sub($this->getHourInterval($hour));
+        if($day < 0) return $this->addDays($day);
         return $this;
     }
     public function nextHour(): self{
@@ -188,10 +196,12 @@ class DateTime extends \DateTime {
 
     //######### MINUTES #########
     public function addMinutes(int $minute): self{
+        if($minute < 0) return $this->subMinutes($minute);
         $this->add($this->getMinuteInterval($minute));
         return $this;
     }
     public function subMinutes(int $minute): self{
+        if($minute < 0) return $this->addMinutes($minute);
         $this->sub($this->getMinuteInterval($minute));
         return $this;
     }
@@ -214,10 +224,12 @@ class DateTime extends \DateTime {
 
     //######### SECONDS #########
     public function addSeconds(int $second): self{
+        if($second < 0) return $this->subSeconds($second);
         $this->add($this->getSecondInterval($second));
         return $this;
     }
     public function subSeconds(int $second): self{
+        if($second < 0) return $this->addSeconds($second);
         $this->sub($this->getSecondInterval($second));
         return $this;
     }

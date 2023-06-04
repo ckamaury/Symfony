@@ -24,6 +24,9 @@ class Database {
     public static function getReference($entityName, $id) {
         return self::getManager()->getReference($entityName, $id);
     }
+    public static function getTableName(string $className):string{
+        return self::getManager()->getClassMetadata($className)->getTableName();
+    }
     public static function resetManager():bool{
         if (!self::getManager()->isOpen()) {
             self::getDoctrine()->resetManager();
@@ -54,9 +57,15 @@ class Database {
         $stmt = $conn->prepare($sql);
         return $stmt->executeStatement($parameters);
     }
+    public static function resetIds(string $className):int{
+        $tableName = self::getTableName($className);
+        return self::resetIdsOfTable($tableName);
+    }
     public static function resetIdsOfTable(string $tableName):int{
-        $sql = 'set @rn := 0;';
-        $sql .= 'UPDATE '.$tableName.' set id = (@rn := @rn + 1) order by id;';
+        self::clear();
+        $sql = "set @rn := 0;";
+        $sql .= "UPDATE $tableName set id = (@rn := @rn + 1) order by id;";
+        $sql .= "ALTER TABLE $tableName AUTO_INCREMENT = 1;";
         return self::execute($sql);
     }
     public static function forceId(string $class):void{

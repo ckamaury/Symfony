@@ -63,9 +63,11 @@ class Database {
     }
     public static function resetIdsOfTable(string $tableName):int{
         self::clear();
-        $sql = "set @rn := 0;";
-        $sql .= "UPDATE $tableName set id = (@rn := @rn + 1) order by id;";
-        $sql .= "ALTER TABLE $tableName AUTO_INCREMENT = 1;";
+        $sql = <<<SQL
+            set @rn := 0;
+            UPDATE $tableName set id = (@rn := @rn + 1) order by id;
+            ALTER TABLE $tableName AUTO_INCREMENT = 1;
+        SQL;
         return self::execute($sql);
     }
     public static function forceId(string $class):void{

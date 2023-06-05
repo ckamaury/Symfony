@@ -37,7 +37,7 @@ abstract class Entity {
         return $this->getId() == $id;
     }
 
-    public function getReference(int $id):static{
+    public static function getReference(int $id):static{
         return Database::getReference(static::class,$id);
     }
 

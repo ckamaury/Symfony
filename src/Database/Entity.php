@@ -37,10 +37,6 @@ abstract class Entity {
         return $this->getId() == $id;
     }
 
-    public static function getReference(int $id):static{
-        return Database::getReference(static::class,$id);
-    }
-
     /* ===== DATABASE ===== */
     public function persist(bool $flush = false):static{
         return $this->save($flush);
@@ -56,6 +52,11 @@ abstract class Entity {
     }
     public function isLoaded():bool{
         return Database::contains($this);
+    }
+
+    /* ===== STATIC ===== */
+    public static function getReference(int $id):static{
+        return Database::getReference(static::class,$id);
     }
 
 }

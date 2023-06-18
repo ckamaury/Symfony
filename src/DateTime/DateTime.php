@@ -343,7 +343,8 @@ class DateTime extends \DateTime {
     public function intlFormat(string $locale,int $dateType,int $timeType,string $timezone):string{
         return datefmt_format($this->datefmt_create($locale,$dateType,$timeType,$timezone),$this);
     }
-    public function intlFormatWithPattern(string $locale,string $pattern,string $timezone):string{
+    public function intlFormatWithPattern(string $locale,string $pattern,string $timezone = null):string{
+        $timezone = $timezone ?? $this->getTimezone()->getName();
         $fmt = $this->datefmt_create($locale,0,0,$timezone);
         $fmt->setPattern($pattern);
         return datefmt_format($fmt,$this);

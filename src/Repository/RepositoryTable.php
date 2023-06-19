@@ -21,7 +21,7 @@ class RepositoryTable extends ServiceEntityRepository {
     }
 
     public function indexBy(string $field, string $field2 = null):self{
-        APP::transformDBResult($this->values,$field,$field2);
+        $this->values = APP::transformDBResult($this->values,$field,$field2);
         return $this;
     }
 

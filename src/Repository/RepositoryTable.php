@@ -28,7 +28,9 @@ class RepositoryTable extends ServiceEntityRepository {
     public function get(string|int $key):?object{
         return ArrayUtils::get($key,$this->values);
     }
-
+    public function getValues(): array {
+        return $this->values;
+    }
 
 
 }

@@ -123,27 +123,21 @@ class APP {
         $array = array();
         foreach($p_Array as $value){
 
-            if(isset($value->{$index})) continue;
-            elseif(method_exists($value,$index)) $index = "$index()";
-            elseif(method_exists($value,"is$index")) $index = "is$index()";
-            elseif(method_exists($value,"has$index")) $index = "has$index()";
-            elseif(method_exists($value,"get$index")) $index = "get$index()";
+            if(isset($value->{$index})) $key = $value->{$index};
+            elseif(method_exists($value,$index)) $key = $value->{$index}();
+            elseif(method_exists($value,"is$index")) $key = $value->{"is$index"}();
+            elseif(method_exists($value,"has$index")) $key = $value->{"has$index"}();
+            elseif(method_exists($value,"get$index")) $key = $value->{"get$index"}();
             else throw new \ErrorException("Méthode inconnue : $index ");
 
-            $key = $value->{$index};
-
             if(!is_null($index2)){
-
-                $value2 = $value->{$index};
-
-                if(isset($value2->{$index2})) continue;
-                elseif(method_exists($value2,$index2)) $index2 = "$index2()";
-                elseif(method_exists($value2,"is$index2")) $index2 = "is$index2()";
-                elseif(method_exists($value2,"has$index2")) $index2 = "has$index2()";
-                elseif(method_exists($value2,"get$index2")) $index2 = "get$index2()";
+                $value2 = $key;
+                if(isset($value2->{$index2})) $key = $value->{$index2};
+                elseif(method_exists($value2,$index2)) $key = $value2->{$index2}();
+                elseif(method_exists($value2,"is$index2")) $key = $value2->{"is$index2"}();
+                elseif(method_exists($value2,"has$index2")) $key = $value2->{"has$index2"}();
+                elseif(method_exists($value2,"get$index2")) $key = $value2->{"get$index2"}();
                 else throw new \ErrorException("Méthode inconnue : $index2 ");
-
-                $key = $value2->{$index2};
 
             }
             $array[$key] = $value;

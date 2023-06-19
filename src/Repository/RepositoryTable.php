@@ -11,13 +11,19 @@ class RepositoryTable extends ServiceEntityRepository {
     private array $values;
 
     public function findAll():array{
-        if(!isset($this->values)) $this->values = $this->findBy([]);
+        if($this->isNotLoaded()) $this->values = $this->findBy([]);
         return $this->values;
     }
 
-    public function unlock():self{
+    public function reset():self{
         unset($this->values);
         return $this;
+    }
+    public function isLoaded():bool{
+        return !isset($this->values);
+    }
+    public function isNotLoaded():bool{
+        return !$this->isLoaded();
     }
 
     public function indexBy(string $field, string $field2 = null):self{
@@ -31,6 +37,9 @@ class RepositoryTable extends ServiceEntityRepository {
     public function getValues(): array {
         return $this->values;
     }
-
+    protected function setValues(array $values):self{
+        $this->values = $values;
+        return $this;
+    }
 
 }

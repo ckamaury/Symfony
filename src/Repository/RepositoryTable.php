@@ -20,7 +20,7 @@ class RepositoryTable extends ServiceEntityRepository {
         return $this;
     }
     public function isLoaded():bool{
-        return !isset($this->values);
+        return isset($this->values);
     }
     public function isNotLoaded():bool{
         return !$this->isLoaded();

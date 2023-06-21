@@ -4,6 +4,7 @@ namespace CkAmaury\Symfony\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class Controller extends AbstractController {
@@ -62,6 +63,13 @@ abstract class Controller extends AbstractController {
         foreach($messages as $message){
             $this->addWarningFlash($message);
         }
+    }
+
+    public function refreshRoute():RedirectResponse{
+        return $this->redirect($this->getRequest()->getUri());
+    }
+    protected function denyAccess(string $message = 'Access Denied.'): void {
+        throw $this->createAccessDeniedException($message);
     }
 
 }

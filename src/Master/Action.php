@@ -29,29 +29,20 @@ abstract class Action {
             if($this->getAccess()->{$name}()->granted()){
                 if($this->isProdEnv()){
                     try{
-                        $this->{$name}(...$arguments);
-                        if($this->isSuccess) {
-                            $this->setItIsSuccess('Action validée');
-                            $this->flush();
-                        }
+                        $this->executeAction($name,$arguments);
                     }
                     catch(Error|Exception $e){
                         $this->rejectWithError($e);
                     }
                 }
                 else {
-                    $this->{$name}(...$arguments);
-                    if($this->isSuccess) {
-                        $this->setItIsSuccess('Action validée');
-                        $this->flush();
-                    }
+                    $this->executeAction($name,$arguments);
                 }
             }
             else{
                 foreach($this->getAccess()->getMessages() as $message){
                     $this->rejectWithMessage($message);
                 }
-
             }
         }
         else{
@@ -59,6 +50,16 @@ abstract class Action {
             if($this->isDevEnv()) throw new ErrorException("La fonction n'existe pas");
         }
         return $this;
+    }
+
+    private function executeAction(string $name, array $arguments):void{
+        $this->{$name}(...$arguments);
+        if($this->isSuccess) {
+            if(is_null($this->successMessage)){
+                $this->successMessage = 'Action validée';
+            }
+            $this->flush();
+        }
     }
 
     protected function addOneMessage(string $message):void{

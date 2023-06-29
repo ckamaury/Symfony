@@ -331,7 +331,7 @@ class DateTime extends \DateTime {
 
     //######### INTL FORMAT #########
     //https://unicode-org.github.io/icu/userguide/format_parse/datetime/
-    public function datefmt_create(string $locale,int $dateType,int $timeType,string $timezone):?IntlDateFormatter{
+    public function datefmt_create(string $locale,int $dateType,int $timeType,string $timezone = null):?IntlDateFormatter{
         return datefmt_create(
             $locale,
             $dateType,
@@ -340,7 +340,7 @@ class DateTime extends \DateTime {
             IntlDateFormatter::GREGORIAN
         );
     }
-    public function intlFormat(string $locale,int $dateType,int $timeType,string $timezone):string{
+    public function intlFormat(string $locale,int $dateType,int $timeType,string $timezone = null):string{
         return datefmt_format($this->datefmt_create($locale,$dateType,$timeType,$timezone),$this);
     }
     public function intlFormatWithPattern(string $locale,string $pattern,string $timezone = null):string{
@@ -349,10 +349,10 @@ class DateTime extends \DateTime {
         $fmt->setPattern($pattern);
         return datefmt_format($fmt,$this);
     }
-    public function frenchFormat(int $dateType,int $timeType,string $timezone):string{
+    public function frenchFormat(int $dateType,int $timeType,string $timezone = null):string{
         return $this->intlFormat('fr_FR',$dateType,$timeType,$timezone);
     }
-    public function frenchFormatWithPattern(string $pattern,string $timezone):string{
+    public function frenchFormatWithPattern(string $pattern,string $timezone = null):string{
         return $this->intlFormatWithPattern('fr_FR',$pattern,$timezone);
     }
     public function frenchParisHourFormat(int $dateType,int $timeType):string{
@@ -360,6 +360,10 @@ class DateTime extends \DateTime {
     }
     public function frenchParisHourFormatWithPattern(string $pattern):string{
         return $this->frenchFormatWithPattern($pattern,'Europe/Paris');
+    }
+
+    public function getPattern(string $pattern, string $locale = 'fr_FR'):string{
+        return $this->intlFormatWithPattern($locale,$pattern);
     }
 
     //######### INTERVAL #########

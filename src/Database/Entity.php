@@ -36,6 +36,9 @@ abstract class Entity {
     public function isSameId(int $id):bool{
         return $this->getId() == $id;
     }
+    public function isDifferentId($entity):bool{
+        return  !$this->isSameId($entity);
+    }
 
     /* ===== DATABASE ===== */
     public function persist(bool $flush = false):static{

@@ -41,7 +41,7 @@ class RepositoryTable extends ServiceEntityRepository {
         $this->values = $values;
         return $this;
     }
-    public function addValue(object $value, string $key = null):self{
+    public function pushValue(object $value, string $key = null):self{
         if(!is_null($key)) $this->values[$key] = $value;
         else $this->values[] = $value;
         return $this;

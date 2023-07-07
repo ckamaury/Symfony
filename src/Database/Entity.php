@@ -56,6 +56,9 @@ abstract class Entity {
     public function isLoaded():bool{
         return Database::contains($this);
     }
+    public function isNotLoaded():bool{
+        return !$this->isLoaded();
+    }
 
     /* ===== STATIC ===== */
     public static function getReference(int $id):static{

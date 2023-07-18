@@ -13,7 +13,7 @@ abstract class Entity {
     #[ORM\Column]
     protected ?int $id = null;
 
-    public function setId(?int $id): static {
+    public function setId(?int $id): self {
         $this->id = $id;
         return $this;
     }
@@ -41,15 +41,15 @@ abstract class Entity {
     }
 
     /* ===== DATABASE ===== */
-    public function persist(bool $flush = false):static{
+    public function persist(bool $flush = false):self{
         return $this->save($flush);
     }
-    public function save(bool $flush = false):static{
+    public function save(bool $flush = false):self{
         if(is_null($this->getId())) Database::persist($this);
         if($flush) Database::flush();
         return $this;
     }
-    public function remove(bool $flush = false):static{
+    public function remove(bool $flush = false):self{
         Database::remove($this,$flush);
         return $this;
     }
@@ -61,7 +61,7 @@ abstract class Entity {
     }
 
     /* ===== STATIC ===== */
-    public static function getReference(int $id):static{
+    public static function getReference(int $id):self{
         return Database::getReference(static::class,$id);
     }
 

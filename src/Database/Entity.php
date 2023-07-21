@@ -61,7 +61,7 @@ abstract class Entity {
     }
 
     /* ===== STATIC ===== */
-    public static function getReference(int $id):self{
+    public static function getDatabaseReference(int $id):self{
         return Database::getReference(static::class,$id);
     }
 

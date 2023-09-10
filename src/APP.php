@@ -25,6 +25,8 @@ class APP {
 
     private static ?string $dir = null;
 
+    private static DateTime $databaseTime;
+
     public static function initialize(?BaseKernel $kernel = null,?OutputInterface $output = null):?BaseKernel{
         if(!self::$isInitialized){
             setlocale(LC_TIME, "french");
@@ -49,7 +51,8 @@ class APP {
 
 
     public static function getDB_Time():DateTime{
-        return (new DateTime())->setTimestamp(DB_TIME);
+        if(!isset(self::$databaseTime)) self::$databaseTime = new DateTime();
+        return self::$databaseTime;
     }
 
 

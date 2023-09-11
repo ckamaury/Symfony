@@ -3,6 +3,8 @@
 namespace CkAmaury\Symfony\Database;
 
 use CkAmaury\Symfony\APP;
+use CkAmaury\Symfony\DateTime\DateTime;
+use Doctrine\DBAL\Result;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Id\AssignedGenerator;
 use Doctrine\ORM\Mapping\ClassMetadataInfo;
@@ -56,6 +58,14 @@ class Database {
         $conn = self::getManager()->getConnection();
         $stmt = $conn->prepare($sql);
         return $stmt->executeStatement($parameters);
+    }
+    public static function executeQuery(string $sql, array $parameters = array()):Result{
+        $conn = self::getManager()->getConnection();
+        $stmt = $conn->prepare($sql);
+        foreach($parameters as &$parameter){
+            if($parameter instanceof DateTime) $parameter = $parameter->formatDB();
+        }
+        return $stmt->executeQuery($parameters);
     }
     public static function resetIds(string $className):int{
         $tableName = self::getTableName($className);

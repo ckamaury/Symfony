@@ -290,8 +290,8 @@ class DateTime extends \DateTime {
         return !(is_null($date)) && $this <= $date;
     }
     public function compare($date,int $sort = SORT_ASC):int{
-        if($sort == SORT_DESC) return $this->compareByAsc($date);
-        return $this->compareByDesc($date);
+        if($sort == SORT_DESC) return $this->compareByDesc($date);
+        return $this->compareByAsc($date);
     }
     public function compareByAsc($date):int{
         return $this <=> $date;

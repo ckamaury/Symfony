@@ -64,6 +64,7 @@ class Database {
         $stmt = $conn->prepare($sql);
         foreach($parameters as &$parameter){
             if($parameter instanceof DateTime) $parameter = $parameter->formatDB();
+            elseif(is_array($parameter)) $parameter = implode(',',$parameter);
         }
         return $stmt->executeQuery($parameters);
     }

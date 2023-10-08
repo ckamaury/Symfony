@@ -20,7 +20,7 @@ abstract class EntityTimed extends Entity {
     public function getInsAt(): ?DateTime{
         return $this->ins_at;
     }
-    public function setInsAt(DateTime $ins_at): self {
+    public function setInsAt(DateTime $ins_at): static {
         $this->ins_at = $ins_at;
         return $this;
     }
@@ -28,12 +28,12 @@ abstract class EntityTimed extends Entity {
     public function getUpdAt(): ?DateTime{
         return $this->upd_at;
     }
-    public function setUpdAt(DateTime $upd_at): self{
+    public function setUpdAt(DateTime $upd_at): static{
         $this->upd_at = $upd_at;
         return $this;
     }
 
-    public function eraseDatabaseTime():self{
+    public function eraseDatabaseTime():static{
         $this->ins_at = null;
         $this->upd_at = null;
         return $this;
@@ -53,10 +53,10 @@ abstract class EntityTimed extends Entity {
         $this->setUpdAt(APP::getDB_Time());
     }
 
-    public function persist(bool $flush = false):self{
+    public function persist(bool $flush = false):static{
         return $this->save($flush);
     }
-    public function save(bool $flush = false):self{
+    public function save(bool $flush = false):static{
         if(is_null($this->getInsAt())) Database::persist($this);
         if($flush) Database::flush();
         return $this;

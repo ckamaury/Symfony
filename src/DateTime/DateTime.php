@@ -107,18 +107,8 @@ class DateTime extends \DateTime {
     public function getMonth(): int {
         return intval($this->format('m'));
     }
-    public function getMonthName(?string $language = null): string {
-        if(is_null($language)){
-            $name = ucfirst(utf8_encode(strftime("%B",$this->getTimestamp())));
-        }
-        else{
-            $old = $this->getLocale()['LC_TIME'];
-            setlocale(LC_TIME, $language);
-            $name = ucfirst(utf8_encode(strftime("%B",$this->getTimestamp())));
-            setlocale(LC_TIME, $old);
-        }
-        return $name;
-
+    public function getMonthName(string $language = null): string {
+        return self::intlFormatWithPattern($language ?? locale_get_default(),'MMMM');
     }
     public function getMonthInterval(int $month): DateInterval{
         return $this->getInterval('P'.$month.'M');
